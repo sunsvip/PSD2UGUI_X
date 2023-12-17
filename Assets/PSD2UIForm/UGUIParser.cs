@@ -454,13 +454,15 @@ namespace UGF.EditorTools.Psd2UGUI
         /// <returns></returns>
         public static UnityEngine.Font FindFontAsset(string fontName)
         {
-            string fixedFontName = GetFixedFontName(fontName);
+            var fontNameLow = fontName.ToLower();
+            string fixedFontName = GetFixedFontName(fontNameLow);
             var fontGuids = AssetDatabase.FindAssets("t:font");
             foreach (var guid in fontGuids)
             {
                 var fontPath = AssetDatabase.GUIDToAssetPath(guid);
                 var font = AssetImporter.GetAtPath(fontPath) as TrueTypeFontImporter;
-                if (font != null && (font.fontTTFName == fontName || font.fontTTFName == fixedFontName))
+                var assetFontNameLow = font.fontTTFName.ToLower();
+                if (font != null && (assetFontNameLow.CompareTo(fontNameLow) == 0 || assetFontNameLow.CompareTo(fixedFontName) == 0))
                 {
                     return AssetDatabase.LoadAssetAtPath<UnityEngine.Font>(fontPath);
                 }
