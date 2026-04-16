@@ -1,252 +1,483 @@
-﻿// PSD2UGUI Quick Tag - 优化版
-// 支持单个/多个图层添加标签 + 保持选择状态
-// Author: sunsvip
-// Version: 4.1
-// Last Update: 2025-11-22
+// PSD2UGUI Layer Tag Menu
+// 规则：
+// 1. 尾部连续 .tag 按从右到左识别
+// 2. 同 family 后方优先
+// 3. 写回时统一规范化顺序：main -> textBackend -> imageType -> role
+// 4. 保留 ref / refp 前缀
 
 #target photoshop
 
-// ==================== 配置区 ====================
-var CONFIG = {
-    "Image\n图片": ".img",
-    "RawImage\n贴图": ".rimg",
-    "Text\n文本": ".txt",
-    "TMPText\nTMP文本": ".tmptxt",
-    "Mask\n遮罩": ".msk",
-    "FillColor\n纯色": ".col",
-    "Background\n背景": ".bg",
-    "Button\n按钮": ".bt",
-    "TMPButton\nTMP按钮": ".tmpbt",
-    "Button_Highlight\n按钮高亮": ".onover",
-    "Button_Press\n按钮按下": ".press",
-    "Button_Select\n按钮选中": ".select",
-    "Button_Disable\n按钮禁用": ".disable",
-    "Button_Text\n按钮文本": ".bttxt",
-    "Dropdown\n下拉框": ".dpd",
-    "TMPDropdown\nTMP下拉框": ".tmpdpd",
-    "Dropdown_Label\n下拉框文本": ".dpdlb",
-    "Dropdown_Arrow\n下拉框箭头": ".dpdicon",
-    "InputField\n输入框": ".ipt",
-    "TMPInputField\nTMP输入框": ".tmpipt",
-    "InputField_Placeholder\n输入框提示文本": ".placeholder",
-    "InputField_Text\n输入框内容文本": ".ipttxt",
-    "Toggle\n勾选框": ".tg",
-    "TMPToggle\nTMP勾选框": ".tmptg",
-    "Toggle_Checkmark\n勾选框标记": ".mark",
-    "Toggle_Label\n勾选框文本": ".tglb",
-    "Slider\n进度条": ".sld",
-    "Slider_Fill\n进度条填充图": ".fill",
-    "Slider_Handle\n进度条滑块": ".handle",
-    "ScrollView\n滚动列表": ".sv",
-    "ScrollView_Viewport\n滚动列表视口": ".vpt",
-    "ScrollView_HorizontalBarBG\n滚动列表水平滑动条背景": ".hbarbg",
-    "ScrollView_HorizontalBar\n滚动列表水平滑动条滑块": ".hbar",
-    "ScrollView_VerticalBarBG\n滚动列表垂直滑动条背景": ".vbarbg",
-    "ScrollView_VerticalBar\n滚动列表垂直滑动条滑块": ".vbar"
+var TAG_CONFIG = {
+    canonicalOrder: ["main", "textBackend", "imageType", "role"],
+    familyLabels: {
+        "main": "结构标签",
+        "textBackend": "文本后端",
+        "imageType": "Image Type",
+        "role": "角色标签"
+    },
+    families: {
+        "main": [
+            { "id": "img", "suffix": ".img", "label": "Image\n图片" },
+            { "id": "rimg", "suffix": ".rimg", "label": "RawImage\n贴图" },
+            { "id": "txt", "suffix": ".txt", "label": "Text\n文本" },
+            { "id": "msk", "suffix": ".msk", "label": "Mask\n遮罩" },
+            { "id": "col", "suffix": ".col", "label": "FillColor\n纯色" },
+            { "id": "bt", "suffix": ".bt", "label": "Button\n按钮" },
+            { "id": "dpd", "suffix": ".dpd", "label": "Dropdown\n下拉框" },
+            { "id": "ipt", "suffix": ".ipt", "label": "InputField\n输入框" },
+            { "id": "tg", "suffix": ".tg", "label": "Toggle\n勾选框" },
+            { "id": "sld", "suffix": ".sld", "label": "Slider\n进度条" },
+            { "id": "sv", "suffix": ".sv", "label": "ScrollView\n滚动列表" }
+        ],
+        "textBackend": [
+            { "id": "tmp", "suffix": ".tmp", "label": "TMP\nTMP文本后端" },
+            { "id": "ugui", "suffix": ".ugui", "label": "UGUI\n原生文本后端" }
+        ],
+        "imageType": [
+            { "id": "simple", "suffix": ".simple", "label": "Simple\n普通" },
+            { "id": "sliced", "suffix": ".sliced", "label": "Sliced\n九宫格" },
+            { "id": "tiled", "suffix": ".tiled", "label": "Tiled\n平铺" },
+            { "id": "filled", "suffix": ".filled", "label": "Filled\n填充" }
+        ],
+        "role": [
+            { "id": "bg", "suffix": ".bg", "label": "Background\n背景" },
+            { "id": "onover", "suffix": ".onover", "label": "Button_Highlight\n按钮高亮" },
+            { "id": "press", "suffix": ".press", "label": "Button_Press\n按钮按下" },
+            { "id": "select", "suffix": ".select", "label": "Button_Select\n按钮选中" },
+            { "id": "disable", "suffix": ".disable", "label": "Button_Disable\n按钮禁用" },
+            { "id": "bttxt", "suffix": ".bttxt", "label": "Button_Text\n按钮文本" },
+            { "id": "dpdlb", "suffix": ".dpdlb", "label": "Dropdown_Label\n下拉框文本" },
+            { "id": "dpdicon", "suffix": ".dpdicon", "label": "Dropdown_Arrow\n下拉框箭头" },
+            { "id": "placeholder", "suffix": ".placeholder", "label": "InputField_Placeholder\n输入框提示文本" },
+            { "id": "ipttxt", "suffix": ".ipttxt", "label": "InputField_Text\n输入框内容文本" },
+            { "id": "mark", "suffix": ".mark", "label": "Toggle_Checkmark\n勾选框标记" },
+            { "id": "tglb", "suffix": ".tglb", "label": "Toggle_Label\n勾选框文本" },
+            { "id": "fill", "suffix": ".fill", "label": "Slider_Fill\n进度条填充图" },
+            { "id": "handle", "suffix": ".handle", "label": "Slider_Handle\n进度条滑块" },
+            { "id": "vpt", "suffix": ".vpt", "label": "ScrollView_Viewport\n滚动列表视口" },
+            { "id": "hbarbg", "suffix": ".hbarbg", "label": "ScrollView_HorizontalBarBG\n水平滑动条背景" },
+            { "id": "hbar", "suffix": ".hbar", "label": "ScrollView_HorizontalBar\n水平滑动条滑块" },
+            { "id": "vbarbg", "suffix": ".vbarbg", "label": "ScrollView_VerticalBarBG\n垂直滑动条背景" },
+            { "id": "vbar", "suffix": ".vbar", "label": "ScrollView_VerticalBar\n垂直滑动条滑块" }
+        ]
+    },
+    aliasMap: {
+        "arrow": { "role": "dpdicon" },
+        "background": { "role": "bg" },
+        "bt": { "main": "bt" },
+        "btlb": { "role": "bttxt" },
+        "btlabel": { "role": "bttxt" },
+        "btn": { "main": "bt" },
+        "bttext": { "role": "bttxt" },
+        "bttxt": { "role": "bttxt" },
+        "button": { "main": "bt" },
+        "buttonlabel": { "role": "bttxt" },
+        "buttontext": { "role": "bttxt" },
+        "checkbox": { "main": "tg" },
+        "click": { "role": "press" },
+        "col": { "main": "col" },
+        "color": { "main": "col" },
+        "disable": { "role": "disable" },
+        "dpd": { "main": "dpd" },
+        "dpdarrow": { "role": "dpdicon" },
+        "dpdicon": { "role": "dpdicon" },
+        "dpdlb": { "role": "dpdlb" },
+        "dpdlabel": { "role": "dpdlb" },
+        "dpdtext": { "role": "dpdlb" },
+        "dpdtxt": { "role": "dpdlb" },
+        "dropdown": { "main": "dpd" },
+        "dropdownarrow": { "role": "dpdicon" },
+        "dropdownlabel": { "role": "dpdlb" },
+        "dropdownlb": { "role": "dpdlb" },
+        "dropdowntext": { "role": "dpdlb" },
+        "dropdowntxt": { "role": "dpdlb" },
+        "fill": { "role": "fill" },
+        "filled": { "imageType": "filled" },
+        "fillcolor": { "main": "col" },
+        "focus": { "role": "select" },
+        "forbid": { "role": "disable" },
+        "handle": { "role": "handle" },
+        "hbar": { "role": "hbar" },
+        "hbarbackground": { "role": "hbarbg" },
+        "hbarbg": { "role": "hbarbg" },
+        "hbarpanel": { "role": "hbarbg" },
+        "highlight": { "role": "onover" },
+        "image": { "main": "img" },
+        "img": { "main": "img" },
+        "input": { "main": "ipt" },
+        "inputbox": { "main": "ipt" },
+        "inputfield": { "main": "ipt" },
+        "inputlabel": { "role": "ipttxt" },
+        "inputtext": { "role": "ipttxt" },
+        "inputtips": { "role": "placeholder" },
+        "ipt": { "main": "ipt" },
+        "iptlabel": { "role": "ipttxt" },
+        "iptlb": { "role": "ipttxt" },
+        "ipttext": { "role": "ipttxt" },
+        "ipttips": { "role": "placeholder" },
+        "ipttxt": { "role": "ipttxt" },
+        "label": { "main": "txt" },
+        "light": { "role": "onover" },
+        "listview": { "main": "sv" },
+        "listviewport": { "role": "vpt" },
+        "lst": { "main": "sv" },
+        "lsthbar": { "role": "hbar" },
+        "lstmask": { "role": "vpt" },
+        "lstvbar": { "role": "vbar" },
+        "mark": { "role": "mark" },
+        "mask": { "main": "msk" },
+        "msk": { "main": "msk" },
+        "onover": { "role": "onover" },
+        "panel": { "role": "bg" },
+        "placeholder": { "role": "placeholder" },
+        "press": { "role": "press" },
+        "rawimage": { "main": "rimg" },
+        "rawimg": { "main": "rimg" },
+        "rimg": { "main": "rimg" },
+        "scrollview": { "main": "sv" },
+        "scrollviewport": { "role": "vpt" },
+        "select": { "role": "select" },
+        "simple": { "imageType": "simple" },
+        "sld": { "main": "sld" },
+        "sldfill": { "role": "fill" },
+        "sldhandle": { "role": "handle" },
+        "slider": { "main": "sld" },
+        "sliderfill": { "role": "fill" },
+        "sliderhandle": { "role": "handle" },
+        "sliced": { "imageType": "sliced" },
+        "sv": { "main": "sv" },
+        "svhbar": { "role": "hbar" },
+        "svmask": { "role": "vpt" },
+        "svvbar": { "role": "vbar" },
+        "tex": { "main": "rimg" },
+        "text": { "main": "txt" },
+        "tg": { "main": "tg" },
+        "tgmark": { "role": "mark" },
+        "tglb": { "role": "tglb" },
+        "tgtxt": { "role": "tglb" },
+        "tiled": { "imageType": "tiled" },
+        "tips": { "role": "placeholder" },
+        "tmp": { "textBackend": "tmp" },
+        "tmpbt": { "main": "bt", "textBackend": "tmp" },
+        "tmpbtn": { "main": "bt", "textBackend": "tmp" },
+        "tmpbutton": { "main": "bt", "textBackend": "tmp" },
+        "tmpcheckbox": { "main": "tg", "textBackend": "tmp" },
+        "tmpdpd": { "main": "dpd", "textBackend": "tmp" },
+        "tmpdropdown": { "main": "dpd", "textBackend": "tmp" },
+        "tmpinput": { "main": "ipt", "textBackend": "tmp" },
+        "tmpinputbox": { "main": "ipt", "textBackend": "tmp" },
+        "tmpinputfield": { "main": "ipt", "textBackend": "tmp" },
+        "tmpipt": { "main": "ipt", "textBackend": "tmp" },
+        "tmplabel": { "main": "txt", "textBackend": "tmp" },
+        "tmptext": { "main": "txt", "textBackend": "tmp" },
+        "tmptg": { "main": "tg", "textBackend": "tmp" },
+        "tmptoggle": { "main": "tg", "textBackend": "tmp" },
+        "tmptxt": { "main": "txt", "textBackend": "tmp" },
+        "toggle": { "main": "tg" },
+        "togglelabel": { "role": "tglb" },
+        "togglemark": { "role": "mark" },
+        "toggletext": { "role": "tglb" },
+        "touch": { "role": "press" },
+        "txt": { "main": "txt" },
+        "ugui": { "textBackend": "ugui" },
+        "vbar": { "role": "vbar" },
+        "vbarbackground": { "role": "vbarbg" },
+        "vbarbg": { "role": "vbarbg" },
+        "vbarpanel": { "role": "vbarbg" },
+        "viewport": { "role": "vpt" },
+        "vpt": { "role": "vpt" }
+    }
 };
-// ===============================================
 
 (function() {
-    // 检查条件
     if (!app.documents.length) {
-        alert("❌ 请先打开一个 PSD 文档");
+        alert("请先打开一个 PSD 文档");
         return;
     }
 
-    var doc = app.activeDocument;
-    
-    if (!doc.activeLayer) {
-        alert("❌ 请先选择一个图层");
-        return;
-    }
-
-    // 保存当前选择状态
-    var savedSelection = saveSelection();
-
-    // 快速获取选中的图层信息
     var layerInfos = getSelectedLayerInfosFast();
-    
-    if (layerInfos.length === 0) {
-        alert("❌ 请先选择一个或多个图层");
+    if (layerInfos.length < 1) {
+        alert("请先选择一个或多个图层");
         return;
     }
 
-    // 创建对话框
-    var w = new Window("dialog", "PSD2UGUI - 快速标签");
-    w.alignChildren = "fill";
-    w.spacing = 12;
-    w.margins = 16;
+    var helpers = createTagHelpers(TAG_CONFIG);
+    var savedSelection = saveSelection();
+    var previewParsed = layerInfos.length === 1 ? helpers.parseLayerName(layerInfos[0].name) : null;
 
-    // 显示选中的图层信息
-    var infoPanel = w.add("panel", undefined, "选中的图层");
+    var w = new Window("dialog", "PSD2UGUI - 图层标签");
+    w.alignChildren = "fill";
+    w.spacing = 10;
+    w.margins = 14;
+
+    var infoPanel = w.add("panel", undefined, "当前选择");
     infoPanel.alignChildren = "fill";
     infoPanel.margins = 10;
 
     if (layerInfos.length === 1) {
-        var nameText = infoPanel.add("statictext", undefined, layerInfos[0].name);
-        nameText.graphics.font = ScriptUI.newFont(nameText.graphics.font.name, ScriptUI.FontStyle.BOLD, 12);
-        nameText.preferredSize.width = 250;
-
-        var currentTags = getLayerTags(layerInfos[0].name);
-        if (currentTags.length > 0) {
-            var tagGroup = infoPanel.add("group");
-            tagGroup.add("statictext", undefined, "已有: ");
-            var tagsText = tagGroup.add("statictext", undefined, currentTags.join(" "));
-            try {
-                tagsText.graphics.foregroundColor = tagsText.graphics.newPen(
-                    w.graphics.PenType.SOLID_COLOR, [0, 0.7, 0, 1], 1
-                );
-            } catch (e) {}
+        infoPanel.add("statictext", undefined, layerInfos[0].name);
+        var tagText = helpers.getDisplayTags(previewParsed).join(" ");
+        infoPanel.add("statictext", undefined, tagText.length > 0 ? ("标签: " + tagText) : "标签: 无");
+        if (previewParsed.prefix.length > 0) {
+            infoPanel.add("statictext", undefined, "前缀: " + previewParsed.prefix);
         }
     } else {
-        var countText = infoPanel.add("statictext", undefined, "已选择 " + layerInfos.length + " 个图层");
-        countText.graphics.font = ScriptUI.newFont(countText.graphics.font.name, ScriptUI.FontStyle.BOLD, 12);
-        
-        var listGroup = infoPanel.add("group");
-        listGroup.orientation = "column";
-        listGroup.alignChildren = "left";
-        
-        var displayCount = Math.min(layerInfos.length, 5);
-        for (var i = 0; i < displayCount; i++) {
-            var layerItem = listGroup.add("statictext", undefined, "  • " + layerInfos[i].name);
-            layerItem.graphics.font = ScriptUI.newFont(layerItem.graphics.font.name, ScriptUI.FontStyle.REGULAR, 10);
-        }
-        
-        if (layerInfos.length > 5) {
-            var moreText = listGroup.add("statictext", undefined, "  ... 还有 " + (layerInfos.length - 5) + " 个");
-            moreText.graphics.font = ScriptUI.newFont(moreText.graphics.font.name, ScriptUI.FontStyle.ITALIC, 10);
+        infoPanel.add("statictext", undefined, "已选择 " + layerInfos.length + " 个图层");
+    }
+
+    var tipText = infoPanel.add("statictext", undefined, "说明：文本层标 .img 会栅格化；图片层标 .txt 不会变成文本。");
+    tipText.preferredSize.width = 340;
+
+    for (var familyIndex = 0; familyIndex < TAG_CONFIG.canonicalOrder.length; familyIndex++) {
+        var familyKey = TAG_CONFIG.canonicalOrder[familyIndex];
+        buildFamilyPanel(w, helpers, familyKey, previewParsed, layerInfos, savedSelection);
+    }
+
+    var actionPanel = w.add("panel", undefined, "移除");
+    actionPanel.alignChildren = "left";
+    actionPanel.margins = 10;
+
+    var actionRow = actionPanel.add("group");
+    actionRow.spacing = 6;
+
+    var removeLastBtn = actionRow.add("button", undefined, "移除最后标签");
+    removeLastBtn.onClick = function() {
+        batchTransformLayerNames(layerInfos, function(currentName) {
+            return helpers.removeLastTag(currentName);
+        });
+        restoreSelection(savedSelection);
+        w.close();
+    };
+
+    var removeAllBtn = actionRow.add("button", undefined, "移除全部标签");
+    removeAllBtn.onClick = function() {
+        batchTransformLayerNames(layerInfos, function(currentName) {
+            return helpers.removeAllTags(currentName);
+        });
+        restoreSelection(savedSelection);
+        w.close();
+    };
+
+    var bottomGroup = w.add("group");
+    bottomGroup.alignment = "center";
+    bottomGroup.add("button", undefined, "关闭", { name: "cancel" });
+
+    w.center();
+    w.show();
+
+    function buildFamilyPanel(root, helpersRef, familyKey, singleParsed, selectedLayerInfos, selectionState) {
+        var panel = root.add("panel", undefined, TAG_CONFIG.familyLabels[familyKey] || familyKey);
+        panel.alignChildren = "fill";
+        panel.margins = 8;
+
+        var headRow = panel.add("group");
+        headRow.spacing = 6;
+        var clearBtn = headRow.add("button", undefined, "清除");
+        clearBtn.preferredSize = [52, 24];
+        clearBtn.onClick = function() {
+            batchTransformLayerNames(selectedLayerInfos, function(currentName) {
+                return helpersRef.applyFamilySelection(currentName, familyKey, null);
+            });
+            restoreSelection(selectionState);
+            w.close();
+        };
+
+        var currentId = singleParsed ? singleParsed.winners[familyKey] : null;
+        var currentLabel = currentId ? ("当前: ." + currentId) : "当前: 无";
+        headRow.add("statictext", undefined, currentLabel);
+
+        var items = helpersRef.getFamilyItems(familyKey);
+        var row = null;
+        for (var i = 0; i < items.length; i++) {
+            if (i % 4 === 0) {
+                row = panel.add("group");
+                row.spacing = 6;
+            }
+
+            var item = items[i];
+            var buttonText = item.suffix;
+            if (currentId && currentId === item.id) {
+                buttonText = "✓ " + buttonText;
+            }
+            var btn = row.add("button", undefined, buttonText);
+            btn.preferredSize = [84, 28];
+            btn.helpTip = item.label;
+            btn.onClick = createApplyHandler(familyKey, item.id, selectedLayerInfos, selectionState, helpersRef);
         }
     }
 
-    w.add("panel", undefined, undefined, {borderStyle: "black"});
-
-    // 标签按钮区域
-    var tagsPanel = w.add("panel", undefined, "添加标签");
-    tagsPanel.alignChildren = "fill";
-    tagsPanel.margins = 10;
-
-    var btnArea = tagsPanel.add("group");
-    btnArea.orientation = "column";
-    btnArea.alignChildren = "fill";
-    btnArea.spacing = 6;
-
-    var keys = [];
-    for (var k in CONFIG) {
-        if (CONFIG.hasOwnProperty(k)) {
-            keys.push(k);
-        }
+    function createApplyHandler(familyKey, itemId, selectedLayerInfos, selectionState, helpersRef) {
+        return function() {
+            batchTransformLayerNames(selectedLayerInfos, function(currentName) {
+                return helpersRef.applyFamilySelection(currentName, familyKey, itemId);
+            });
+            restoreSelection(selectionState);
+            w.close();
+        };
     }
 
-    var row = null;
-    for (var i = 0; i < keys.length; i++) {
-        if (i % 3 === 0) {
-            row = btnArea.add("group");
-            row.spacing = 6;
-        }
+    function createTagHelpers(config) {
+        var familyItemMap = {};
+        var familyItems = {};
+        var aliasMap = {};
 
-        var key = keys[i];
-        var suffix = CONFIG[key];
-        
-        var btn = row.add("button", undefined, suffix);
-        btn.preferredSize = [80, 32];
-        btn.helpTip = key;
-        
-        // 单选时禁用已有标签
-        if (layerInfos.length === 1) {
-            var currentTags = getLayerTags(layerInfos[0].name);
-            if (arrayContains(currentTags, suffix)) {
-                btn.text = "✓ " + btn.text;
-                btn.enabled = false;
+        for (var familyKey in config.families) {
+            if (!config.families.hasOwnProperty(familyKey)) continue;
+            familyItems[familyKey] = config.families[familyKey];
+            familyItemMap[familyKey] = {};
+            for (var i = 0; i < config.families[familyKey].length; i++) {
+                var item = config.families[familyKey][i];
+                familyItemMap[familyKey][item.id] = item;
             }
         }
 
-        btn.onClick = (function(s, infos, selection) {
-            return function() {
-                batchAddTagByInfo(infos, s);
-                restoreSelection(selection);
-                w.close();
-            };
-        })(suffix, layerInfos, savedSelection);
-    }
-
-    w.add("panel", undefined, undefined, {borderStyle: "black"});
-
-    // 移除标签区域
-    var removePanel = w.add("panel", undefined, "移除标签");
-    removePanel.alignChildren = "fill";
-    removePanel.margins = 10;
-
-    var removeGroup = removePanel.add("group");
-    removeGroup.spacing = 6;
-    removeGroup.alignment = "center";
-
-    if (layerInfos.length === 1) {
-        // 单选模式
-        var currentTags = getLayerTags(layerInfos[0].name);
-        
-        if (currentTags.length > 0) {
-            var removeLastBtn = removeGroup.add("button", undefined, "移除最后 (" + currentTags[currentTags.length - 1] + ")");
-            removeLastBtn.preferredSize = [140, 28];
-            removeLastBtn.helpTip = "移除最后一个标签";
-            removeLastBtn.onClick = function() {
-                batchRemoveLastTagByInfo(layerInfos);
-                restoreSelection(savedSelection);
-                w.close();
-            };
-            
-            var removeAllBtn = removeGroup.add("button", undefined, "移除全部");
-            removeAllBtn.preferredSize = [90, 28];
-            removeAllBtn.helpTip = "移除所有标签";
-            removeAllBtn.onClick = function() {
-                batchRemoveAllTagsByInfo(layerInfos);
-                restoreSelection(savedSelection);
-                w.close();
-            };
-        } else {
-            var noTagText = removeGroup.add("statictext", undefined, "当前图层无标签");
-            noTagText.graphics.font = ScriptUI.newFont(noTagText.graphics.font.name, ScriptUI.FontStyle.ITALIC, 11);
+        for (var alias in config.aliasMap) {
+            if (!config.aliasMap.hasOwnProperty(alias)) continue;
+            aliasMap[String(alias).toLowerCase()] = shallowClone(config.aliasMap[alias]);
         }
-    } else {
-        // 多选模式
-        var batchRemoveLastBtn = removeGroup.add("button", undefined, "批量移除最后标签");
-        batchRemoveLastBtn.preferredSize = [140, 28];
-        batchRemoveLastBtn.helpTip = "移除所有选中图层的最后一个标签";
-        batchRemoveLastBtn.onClick = function() {
-            batchRemoveLastTagByInfo(layerInfos);
-            restoreSelection(savedSelection);
-            w.close();
-        };
 
-        var batchRemoveAllBtn = removeGroup.add("button", undefined, "批量移除全部标签");
-        batchRemoveAllBtn.preferredSize = [140, 28];
-        batchRemoveAllBtn.helpTip = "移除所有选中图层的所有标签";
-        batchRemoveAllBtn.onClick = function() {
-            batchRemoveAllTagsByInfo(layerInfos);
-            restoreSelection(savedSelection);
-            w.close();
+        function parseLayerName(layerName) {
+            var rawName = layerName || "";
+            var workingName = trimString(rawName);
+            var prefix = "";
+
+            if (startsWithIgnoreCase(workingName, "refp ")) {
+                prefix = "refp ";
+                workingName = trimString(workingName.substring(5));
+            } else if (startsWithIgnoreCase(workingName, "ref ")) {
+                prefix = "ref ";
+                workingName = trimString(workingName.substring(4));
+            }
+
+            var orderedTags = [];
+            while (workingName.length > 0) {
+                var splitIndex = workingName.lastIndexOf(".");
+                if (splitIndex <= 0 || splitIndex >= workingName.length - 1) {
+                    break;
+                }
+
+                var token = workingName.substring(splitIndex + 1).toLowerCase();
+                if (!aliasMap.hasOwnProperty(token)) {
+                    break;
+                }
+
+                orderedTags.unshift({
+                    token: token,
+                    mapping: shallowClone(aliasMap[token])
+                });
+                workingName = trimRightWhitespace(workingName.substring(0, splitIndex));
+            }
+
+            return {
+                rawName: rawName,
+                prefix: prefix,
+                baseName: trimString(workingName),
+                orderedTags: orderedTags,
+                winners: resolveWinners(orderedTags)
+            };
+        }
+
+        function resolveWinners(orderedTags) {
+            var winners = {};
+            for (var i = 0; i < orderedTags.length; i++) {
+                var mapping = orderedTags[i].mapping;
+                for (var familyKey in mapping) {
+                    if (!mapping.hasOwnProperty(familyKey)) continue;
+                    winners[familyKey] = mapping[familyKey];
+                }
+            }
+            return winners;
+        }
+
+        function composeLayerName(parsed) {
+            var name = parsed.baseName || "";
+            if (parsed.prefix.length > 0) {
+                name = parsed.prefix + name;
+            }
+
+            for (var i = 0; i < config.canonicalOrder.length; i++) {
+                var familyKey = config.canonicalOrder[i];
+                var winnerId = parsed.winners[familyKey];
+                if (!winnerId) continue;
+                if (!familyItemMap[familyKey] || !familyItemMap[familyKey][winnerId]) continue;
+                name += familyItemMap[familyKey][winnerId].suffix;
+            }
+            return name;
+        }
+
+        function applyFamilySelection(layerName, familyKey, itemId) {
+            var parsed = parseLayerName(layerName);
+            if (itemId) {
+                parsed.winners[familyKey] = itemId;
+            } else {
+                delete parsed.winners[familyKey];
+            }
+            return composeLayerName(parsed);
+        }
+
+        function removeLastTag(layerName) {
+            var parsed = parseLayerName(layerName);
+            if (parsed.orderedTags.length < 1) {
+                return layerName;
+            }
+            parsed.orderedTags.pop();
+            parsed.winners = resolveWinners(parsed.orderedTags);
+            return composeLayerName(parsed);
+        }
+
+        function removeAllTags(layerName) {
+            var parsed = parseLayerName(layerName);
+            return (parsed.prefix || "") + (parsed.baseName || "");
+        }
+
+        function getDisplayTags(parsed) {
+            if (!parsed) return [];
+            var result = [];
+            for (var i = 0; i < config.canonicalOrder.length; i++) {
+                var familyKey = config.canonicalOrder[i];
+                var winnerId = parsed.winners[familyKey];
+                if (!winnerId) continue;
+                if (!familyItemMap[familyKey] || !familyItemMap[familyKey][winnerId]) continue;
+                result.push(familyItemMap[familyKey][winnerId].suffix);
+            }
+            return result;
+        }
+
+        return {
+            parseLayerName: parseLayerName,
+            applyFamilySelection: applyFamilySelection,
+            removeLastTag: removeLastTag,
+            removeAllTags: removeAllTags,
+            getDisplayTags: getDisplayTags,
+            getFamilyItems: function(familyKey) {
+                return familyItems[familyKey] || [];
+            }
         };
     }
 
-    w.add("panel", undefined, undefined, {borderStyle: "black"});
+    function shallowClone(source) {
+        var target = {};
+        for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+                target[key] = source[key];
+            }
+        }
+        return target;
+    }
 
-    // 底部按钮
-    var bottomGroup = w.add("group");
-    bottomGroup.alignment = "center";
-    bottomGroup.spacing = 8;
+    function trimString(value) {
+        return String(value || "").replace(/^\s+|\s+$/g, "");
+    }
 
-    var cancelBtn = bottomGroup.add("button", undefined, "取消 (ESC)", {name: "cancel"});
-    cancelBtn.preferredSize = [100, 28];
+    function trimRightWhitespace(value) {
+        return String(value || "").replace(/\s+$/g, "");
+    }
 
-    // 提示
-    var tipText = layerInfos.length === 1 ? 
-        "💡 支持多标签，点击即可追加" : 
-        "💡 批量模式 (" + layerInfos.length + " 个图层)";
-    var tip = w.add("statictext", undefined, tipText);
-    tip.graphics.font = ScriptUI.newFont(tip.graphics.font.name, ScriptUI.FontStyle.ITALIC, 10);
+    function startsWithIgnoreCase(text, prefix) {
+        if (text.length < prefix.length) return false;
+        return text.substring(0, prefix.length).toLowerCase() === prefix.toLowerCase();
+    }
 
-    // ==================== 核心函数 ====================
-
-    // 批量处理上下文（避免重复保存/恢复选择导致变慢）
     var __batchContext = null;
 
     function beginBatchRename() {
@@ -262,231 +493,152 @@ var CONFIG = {
         }
     }
 
-    // 保存当前选择状态
-    function saveSelection() {
-        var selection = {
-            layerIDs: [],
-            expandedGroups: []
-        };
-        
+    function batchTransformLayerNames(layerInfosToEdit, transformFn) {
+        beginBatchRename();
         try {
-            // 保存选中的图层ID
+            for (var i = 0; i < layerInfosToEdit.length; i++) {
+                try {
+                    var info = layerInfosToEdit[i];
+                    var currentName = getLayerNameById(info.id) || info.name;
+                    var nextName = transformFn(currentName, info);
+                    if (nextName && nextName !== currentName) {
+                        setLayerNameById(info.id, nextName);
+                    }
+                } catch (ignoredRename) {}
+            }
+        } finally {
+            endBatchRename();
+        }
+    }
+
+    function saveSelection() {
+        var selection = { layerIDs: [] };
+        try {
             var ref = new ActionReference();
-            ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('targetLayersIDs'));
-            ref.putEnumerated(charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt'));
+            ref.putProperty(charIDToTypeID("Prpr"), stringIDToTypeID("targetLayersIDs"));
+            ref.putEnumerated(charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
             var desc = executeActionGet(ref);
-            
-            if (desc.hasKey(stringIDToTypeID('targetLayersIDs'))) {
-                var list = desc.getList(stringIDToTypeID('targetLayersIDs'));
+            if (desc.hasKey(stringIDToTypeID("targetLayersIDs"))) {
+                var list = desc.getList(stringIDToTypeID("targetLayersIDs"));
                 for (var i = 0; i < list.count; i++) {
                     selection.layerIDs.push(list.getReference(i).getIdentifier());
                 }
             }
-        } catch (e) {}
-        
+        } catch (ignoredSelection) {}
         return selection;
     }
 
-    // 恢复选择状态
     function restoreSelection(selection) {
-        if (!selection || selection.layerIDs.length === 0) return;
-        
+        if (!selection || !selection.layerIDs || selection.layerIDs.length < 1) return;
         try {
-            // 使用 AM 恢复选择，不展开组
             var desc = new ActionDescriptor();
             var ref = new ActionReference();
-            
-            // 添加第一个图层
-            ref.putIdentifier(charIDToTypeID('Lyr '), selection.layerIDs[0]);
-            desc.putReference(charIDToTypeID('null'), ref);
-            desc.putBoolean(charIDToTypeID('MkVs'), false); // 不显示/展开
-            executeAction(charIDToTypeID('slct'), desc, DialogModes.NO);
-            
-            // 如果是多选，添加其他图层
-            if (selection.layerIDs.length > 1) {
-                for (var i = 1; i < selection.layerIDs.length; i++) {
-                    var desc2 = new ActionDescriptor();
-                    var ref2 = new ActionReference();
-                    ref2.putIdentifier(charIDToTypeID('Lyr '), selection.layerIDs[i]);
-                    desc2.putReference(charIDToTypeID('null'), ref2);
-                    desc2.putEnumerated(stringIDToTypeID('selectionModifier'), stringIDToTypeID('selectionModifierType'), stringIDToTypeID('addToSelection'));
-                    desc2.putBoolean(charIDToTypeID('MkVs'), false);
-                    executeAction(charIDToTypeID('slct'), desc2, DialogModes.NO);
-                }
+            ref.putIdentifier(charIDToTypeID("Lyr "), selection.layerIDs[0]);
+            desc.putReference(charIDToTypeID("null"), ref);
+            desc.putBoolean(charIDToTypeID("MkVs"), false);
+            executeAction(charIDToTypeID("slct"), desc, DialogModes.NO);
+
+            for (var i = 1; i < selection.layerIDs.length; i++) {
+                var desc2 = new ActionDescriptor();
+                var ref2 = new ActionReference();
+                ref2.putIdentifier(charIDToTypeID("Lyr "), selection.layerIDs[i]);
+                desc2.putReference(charIDToTypeID("null"), ref2);
+                desc2.putEnumerated(stringIDToTypeID("selectionModifier"), stringIDToTypeID("selectionModifierType"), stringIDToTypeID("addToSelection"));
+                desc2.putBoolean(charIDToTypeID("MkVs"), false);
+                executeAction(charIDToTypeID("slct"), desc2, DialogModes.NO);
             }
-        } catch (e) {
-            // 恢复失败，静默处理
-        }
+        } catch (ignoredRestore) {}
     }
 
-    // 快速获取选中的图层信息（只获取ID和名称）
     function getSelectedLayerInfosFast() {
         var infos = [];
-        
         try {
             var ref = new ActionReference();
-            ref.putProperty(charIDToTypeID('Prpr'), stringIDToTypeID('targetLayersIDs'));
-            ref.putEnumerated(charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt'));
+            ref.putProperty(charIDToTypeID("Prpr"), stringIDToTypeID("targetLayersIDs"));
+            ref.putEnumerated(charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
             var desc = executeActionGet(ref);
-            
-            if (desc.hasKey(stringIDToTypeID('targetLayersIDs'))) {
-                var list = desc.getList(stringIDToTypeID('targetLayersIDs'));
-                
+            if (desc.hasKey(stringIDToTypeID("targetLayersIDs"))) {
+                var list = desc.getList(stringIDToTypeID("targetLayersIDs"));
                 for (var i = 0; i < list.count; i++) {
                     var layerID = list.getReference(i).getIdentifier();
-                    
-                    // 只获取名称
-                    var ref2 = new ActionReference();
-                    ref2.putIdentifier(charIDToTypeID('Lyr '), layerID);
-                    var layerDesc = executeActionGet(ref2);
-                    
+                    var layerRef = new ActionReference();
+                    layerRef.putIdentifier(charIDToTypeID("Lyr "), layerID);
+                    var layerDesc = executeActionGet(layerRef);
                     infos.push({
                         id: layerID,
-                        name: layerDesc.getString(charIDToTypeID('Nm  '))
+                        name: layerDesc.getString(charIDToTypeID("Nm  "))
                     });
                 }
-                
                 return infos;
             }
-        } catch (e) {}
-        
-        // 单选模式
+        } catch (ignoredBatchRead) {}
+
         if (app.activeDocument.activeLayer) {
             try {
-                var ref3 = new ActionReference();
-                ref3.putEnumerated(charIDToTypeID('Lyr '), charIDToTypeID('Ordn'), charIDToTypeID('Trgt'));
-                var desc3 = executeActionGet(ref3);
-                
+                var activeRef = new ActionReference();
+                activeRef.putEnumerated(charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+                var activeDesc = executeActionGet(activeRef);
                 infos.push({
-                    id: desc3.getInteger(stringIDToTypeID('layerID')),
+                    id: activeDesc.getInteger(stringIDToTypeID("layerID")),
                     name: app.activeDocument.activeLayer.name
                 });
-            } catch (e) {}
+            } catch (ignoredActiveLayer) {}
         }
-        
         return infos;
     }
 
-    // 通过信息批量添加标签（使用 AM，不影响选择）
-    function batchAddTagByInfo(layerInfos, suffix) {
-        beginBatchRename();
-        try {
-            for (var i = 0; i < layerInfos.length; i++) {
-                try {
-                    var info = layerInfos[i];
-                    var currentName = getLayerNameById(info.id) || info.name;
-                    var tags = getLayerTags(currentName);
-                    
-                    // 检查是否已有该标签
-                    if (!arrayContains(tags, suffix)) {
-                        var newName = currentName + suffix;
-                        setLayerNameById(info.id, newName);
-                    }
-                } catch (e) {}
-            }
-        } finally {
-            endBatchRename();
-        }
-    }
-
-    // 批量移除最后标签
-    function batchRemoveLastTagByInfo(layerInfos) {
-        beginBatchRename();
-        try {
-            for (var i = 0; i < layerInfos.length; i++) {
-                try {
-                    var info = layerInfos[i];
-                    var currentName = getLayerNameById(info.id) || info.name;
-                    var tags = getLayerTags(currentName);
-                    
-                    if (tags.length > 0) {
-                        var lastTag = tags[tags.length - 1];
-                        var newName = currentName.substring(0, currentName.length - lastTag.length);
-                        setLayerNameById(info.id, newName);
-                    }
-                } catch (e) {}
-            }
-        } finally {
-            endBatchRename();
-        }
-    }
-
-    // 批量移除所有标签
-    function batchRemoveAllTagsByInfo(layerInfos) {
-        beginBatchRename();
-        try {
-            for (var i = 0; i < layerInfos.length; i++) {
-                try {
-                    var info = layerInfos[i];
-                    var currentName = getLayerNameById(info.id) || info.name;
-                    var tags = getLayerTags(currentName);
-                    
-                    if (tags.length > 0) {
-                        var totalLength = 0;
-                        for (var j = 0; j < tags.length; j++) {
-                            totalLength += tags[j].length;
-                        }
-                        var newName = currentName.substring(0, currentName.length - totalLength);
-                        setLayerNameById(info.id, newName);
-                    }
-                } catch (e) {}
-            }
-        } finally {
-            endBatchRename();
-        }
-    }
-
-    // 通过图层ID获取名称
     function getLayerNameById(layerId) {
         try {
-            if (layerId === undefined || layerId === null) return null;
             var ref = new ActionReference();
-            ref.putIdentifier(charIDToTypeID('Lyr '), layerId);
+            ref.putIdentifier(charIDToTypeID("Lyr "), layerId);
             var layerDesc = executeActionGet(ref);
-            return layerDesc.getString(charIDToTypeID('Nm  '));
-        } catch (e) {}
+            return layerDesc.getString(charIDToTypeID("Nm  "));
+        } catch (ignoredGetName) {}
         return null;
     }
 
-    // 选择图层（仅用于兼容性回退）
     function selectLayerById(layerId) {
-        if (layerId === undefined || layerId === null) return;
         var desc = new ActionDescriptor();
         var ref = new ActionReference();
-        ref.putIdentifier(charIDToTypeID('Lyr '), layerId);
-        desc.putReference(charIDToTypeID('null'), ref);
-        desc.putBoolean(charIDToTypeID('MkVs'), false);
-        executeAction(charIDToTypeID('slct'), desc, DialogModes.NO);
+        ref.putIdentifier(charIDToTypeID("Lyr "), layerId);
+        desc.putReference(charIDToTypeID("null"), ref);
+        desc.putBoolean(charIDToTypeID("MkVs"), false);
+        executeAction(charIDToTypeID("slct"), desc, DialogModes.NO);
     }
 
-    // 尝试使用 AM 直接改名（无需选中，速度更快）
     function trySetLayerNameByIdAM(layerId, newName) {
         var oldDialogs = null;
-        try { oldDialogs = app.displayDialogs; app.displayDialogs = DialogModes.NO; } catch (e) {}
+        try {
+            oldDialogs = app.displayDialogs;
+            app.displayDialogs = DialogModes.NO;
+        } catch (ignoredDialogs) {}
+
         try {
             var desc = new ActionDescriptor();
             var ref = new ActionReference();
-            ref.putIdentifier(charIDToTypeID('Lyr '), layerId);
-            desc.putReference(charIDToTypeID('null'), ref);
-            
+            ref.putIdentifier(charIDToTypeID("Lyr "), layerId);
+            desc.putReference(charIDToTypeID("null"), ref);
+
             var nameDesc = new ActionDescriptor();
-            nameDesc.putString(charIDToTypeID('Nm  '), newName);
-            desc.putObject(charIDToTypeID('T   '), charIDToTypeID('Lyr '), nameDesc);
-            
-            executeAction(charIDToTypeID('setd'), desc, DialogModes.NO);
+            nameDesc.putString(charIDToTypeID("Nm  "), newName);
+            desc.putObject(charIDToTypeID("T   "), charIDToTypeID("Lyr "), nameDesc);
+
+            executeAction(charIDToTypeID("setd"), desc, DialogModes.NO);
             return true;
-        } catch (e) {
+        } catch (ignoredSetd) {
             return false;
         } finally {
-            try { if (oldDialogs !== null && oldDialogs !== undefined) app.displayDialogs = oldDialogs; } catch (e2) {}
+            try {
+                if (oldDialogs !== null && oldDialogs !== undefined) {
+                    app.displayDialogs = oldDialogs;
+                }
+            } catch (ignoredRestoreDialogs) {}
         }
     }
 
-    // 通过图层ID设置图层名（AM 优先，失败再走 DOM 解锁）
     function setLayerNameById(layerId, newName) {
-        if (layerId === undefined || layerId === null) return;
         if (trySetLayerNameByIdAM(layerId, newName)) return;
-        
+
         var hasBatch = !!__batchContext;
         var selection = hasBatch ? null : saveSelection();
         try {
@@ -495,102 +647,64 @@ var CONFIG = {
             if (!layer) return;
             try {
                 if (layer.name === newName) return;
-            } catch (e) {}
+            } catch (ignoredSameName) {}
 
-            // 快速尝试直接改名（未锁定时最快）
-            try { layer.name = newName; } catch (e) {}
+            try {
+                layer.name = newName;
+            } catch (ignoredFastRename) {}
             try {
                 if (layer.name === newName) return;
-            } catch (e) {}
+            } catch (ignoredCheckFastRename) {}
 
-            // 记录并解锁父组（被锁父组会导致改名不可用）
             var parentLocks = [];
             try {
                 var parent = layer.parent;
                 while (parent && parent.typename !== "Document") {
                     if (parent.typename === "LayerSet") {
                         var parentLocked = null;
-                        try { parentLocked = parent.allLocked; } catch (e) { parentLocked = null; }
+                        try { parentLocked = parent.allLocked; } catch (ignoredParentLockRead) { parentLocked = null; }
                         parentLocks.push({ layer: parent, allLocked: parentLocked });
-                        try { if (parentLocked) parent.allLocked = false; } catch (e) {}
+                        try { if (parentLocked) parent.allLocked = false; } catch (ignoredParentUnlock) {}
                     }
                     parent = parent.parent;
                 }
-            } catch (e) {}
+            } catch (ignoredParentWalk) {}
 
-            // 记录并解锁当前层
             var layerLocks = {};
-            try { layerLocks.allLocked = layer.allLocked; if (layer.allLocked) layer.allLocked = false; } catch (e) {}
-            try { layerLocks.positionLocked = layer.positionLocked; if (layer.positionLocked) layer.positionLocked = false; } catch (e) {}
-            try { layerLocks.transparentPixelsLocked = layer.transparentPixelsLocked; if (layer.transparentPixelsLocked) layer.transparentPixelsLocked = false; } catch (e) {}
-            try { layerLocks.pixelsLocked = layer.pixelsLocked; if (layer.pixelsLocked) layer.pixelsLocked = false; } catch (e) {}
-            
-            // 背景层需要先转为普通图层才能改名
+            try { layerLocks.allLocked = layer.allLocked; if (layer.allLocked) layer.allLocked = false; } catch (ignoredAllLocked) {}
+            try { layerLocks.positionLocked = layer.positionLocked; if (layer.positionLocked) layer.positionLocked = false; } catch (ignoredPosLocked) {}
+            try { layerLocks.transparentPixelsLocked = layer.transparentPixelsLocked; if (layer.transparentPixelsLocked) layer.transparentPixelsLocked = false; } catch (ignoredTransparentLocked) {}
+            try { layerLocks.pixelsLocked = layer.pixelsLocked; if (layer.pixelsLocked) layer.pixelsLocked = false; } catch (ignoredPixelsLocked) {}
+
             var wasBackground = false;
             try {
                 wasBackground = layer.isBackgroundLayer;
                 if (wasBackground) layer.isBackgroundLayer = false;
-            } catch (e) {}
-            
-            try { layer.name = newName; } catch (e) {}
-            
-            // 恢复当前层锁定
-            try { if (layerLocks.allLocked !== undefined) layer.allLocked = layerLocks.allLocked; } catch (e) {}
-            try { if (layerLocks.positionLocked !== undefined) layer.positionLocked = layerLocks.positionLocked; } catch (e) {}
-            try { if (layerLocks.transparentPixelsLocked !== undefined) layer.transparentPixelsLocked = layerLocks.transparentPixelsLocked; } catch (e) {}
-            try { if (layerLocks.pixelsLocked !== undefined) layer.pixelsLocked = layerLocks.pixelsLocked; } catch (e) {}
-            
-            // 尝试恢复背景层（可能失败，失败则保持普通层）
+            } catch (ignoredBackground) {}
+
+            try { layer.name = newName; } catch (ignoredRename) {}
+
+            try { if (layerLocks.allLocked !== undefined) layer.allLocked = layerLocks.allLocked; } catch (ignoredRestoreAllLocked) {}
+            try { if (layerLocks.positionLocked !== undefined) layer.positionLocked = layerLocks.positionLocked; } catch (ignoredRestorePosLocked) {}
+            try { if (layerLocks.transparentPixelsLocked !== undefined) layer.transparentPixelsLocked = layerLocks.transparentPixelsLocked; } catch (ignoredRestoreTransparentLocked) {}
+            try { if (layerLocks.pixelsLocked !== undefined) layer.pixelsLocked = layerLocks.pixelsLocked; } catch (ignoredRestorePixelsLocked) {}
+
             if (wasBackground) {
-                try { layer.isBackgroundLayer = true; } catch (e) {}
+                try { layer.isBackgroundLayer = true; } catch (ignoredRestoreBackground) {}
             }
-            
-            // 恢复父组锁定（逆序）
+
             for (var i = parentLocks.length - 1; i >= 0; i--) {
                 try {
                     if (parentLocks[i].allLocked !== null && parentLocks[i].allLocked !== undefined) {
                         parentLocks[i].layer.allLocked = parentLocks[i].allLocked;
                     }
-                } catch (e) {}
+                } catch (ignoredRestoreParent) {}
             }
-        } catch (e) {} finally {
-            if (!hasBatch && selection) restoreSelection(selection);
-        }
-    }
-
-    // 获取图层的所有标签
-    function getLayerTags(layerName) {
-        var tags = [];
-        var name = layerName;
-        
-        var found = true;
-        while (found) {
-            found = false;
-            for (var k in CONFIG) {
-                if (CONFIG.hasOwnProperty(k)) {
-                    var suffix = CONFIG[k];
-                    if (name.length >= suffix.length && 
-                        name.substring(name.length - suffix.length) === suffix) {
-                        tags.unshift(suffix);
-                        name = name.substring(0, name.length - suffix.length);
-                        found = true;
-                        break;
-                    }
-                }
+        } catch (ignoredDirectRename) {
+        } finally {
+            if (!hasBatch && selection) {
+                restoreSelection(selection);
             }
         }
-        return tags;
     }
-
-    // 数组包含检查
-    function arrayContains(arr, item) {
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] === item) return true;
-        }
-        return false;
-    }
-
-    // 显示窗口
-    w.center();
-    w.show();
 })();

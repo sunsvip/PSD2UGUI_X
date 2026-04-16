@@ -15,6 +15,135 @@ var CONFIG = {
     // 导出文件名后缀
     EXPORT_SUFFIX: "_UGUI"
 };
+
+var TAG_CONFIG = {
+    aliasMap: {
+        "arrow": { "role": "dpdicon" },
+        "background": { "role": "bg" },
+        "bt": { "main": "bt" },
+        "btlb": { "role": "bttxt" },
+        "btlabel": { "role": "bttxt" },
+        "btn": { "main": "bt" },
+        "bttext": { "role": "bttxt" },
+        "bttxt": { "role": "bttxt" },
+        "button": { "main": "bt" },
+        "buttonlabel": { "role": "bttxt" },
+        "buttontext": { "role": "bttxt" },
+        "checkbox": { "main": "tg" },
+        "click": { "role": "press" },
+        "col": { "main": "col" },
+        "color": { "main": "col" },
+        "disable": { "role": "disable" },
+        "dpd": { "main": "dpd" },
+        "dpdarrow": { "role": "dpdicon" },
+        "dpdicon": { "role": "dpdicon" },
+        "dpdlb": { "role": "dpdlb" },
+        "dpdlabel": { "role": "dpdlb" },
+        "dpdtext": { "role": "dpdlb" },
+        "dpdtxt": { "role": "dpdlb" },
+        "dropdown": { "main": "dpd" },
+        "dropdownarrow": { "role": "dpdicon" },
+        "dropdownlabel": { "role": "dpdlb" },
+        "dropdownlb": { "role": "dpdlb" },
+        "dropdowntext": { "role": "dpdlb" },
+        "dropdowntxt": { "role": "dpdlb" },
+        "fill": { "role": "fill" },
+        "filled": { "imageType": "filled" },
+        "fillcolor": { "main": "col" },
+        "focus": { "role": "select" },
+        "forbid": { "role": "disable" },
+        "handle": { "role": "handle" },
+        "hbar": { "role": "hbar" },
+        "hbarbackground": { "role": "hbarbg" },
+        "hbarbg": { "role": "hbarbg" },
+        "hbarpanel": { "role": "hbarbg" },
+        "highlight": { "role": "onover" },
+        "image": { "main": "img" },
+        "img": { "main": "img" },
+        "input": { "main": "ipt" },
+        "inputbox": { "main": "ipt" },
+        "inputfield": { "main": "ipt" },
+        "inputlabel": { "role": "ipttxt" },
+        "inputtext": { "role": "ipttxt" },
+        "inputtips": { "role": "placeholder" },
+        "ipt": { "main": "ipt" },
+        "iptlabel": { "role": "ipttxt" },
+        "iptlb": { "role": "ipttxt" },
+        "ipttext": { "role": "ipttxt" },
+        "ipttips": { "role": "placeholder" },
+        "ipttxt": { "role": "ipttxt" },
+        "label": { "main": "txt" },
+        "light": { "role": "onover" },
+        "listview": { "main": "sv" },
+        "listviewport": { "role": "vpt" },
+        "lst": { "main": "sv" },
+        "lsthbar": { "role": "hbar" },
+        "lstmask": { "role": "vpt" },
+        "lstvbar": { "role": "vbar" },
+        "mark": { "role": "mark" },
+        "mask": { "main": "msk" },
+        "msk": { "main": "msk" },
+        "onover": { "role": "onover" },
+        "panel": { "role": "bg" },
+        "placeholder": { "role": "placeholder" },
+        "press": { "role": "press" },
+        "rawimage": { "main": "rimg" },
+        "rawimg": { "main": "rimg" },
+        "rimg": { "main": "rimg" },
+        "scrollview": { "main": "sv" },
+        "scrollviewport": { "role": "vpt" },
+        "select": { "role": "select" },
+        "simple": { "imageType": "simple" },
+        "sld": { "main": "sld" },
+        "sldfill": { "role": "fill" },
+        "sldhandle": { "role": "handle" },
+        "slider": { "main": "sld" },
+        "sliderfill": { "role": "fill" },
+        "sliderhandle": { "role": "handle" },
+        "sliced": { "imageType": "sliced" },
+        "sv": { "main": "sv" },
+        "svhbar": { "role": "hbar" },
+        "svmask": { "role": "vpt" },
+        "svvbar": { "role": "vbar" },
+        "tex": { "main": "rimg" },
+        "text": { "main": "txt" },
+        "tg": { "main": "tg" },
+        "tgmark": { "role": "mark" },
+        "tglb": { "role": "tglb" },
+        "tgtxt": { "role": "tglb" },
+        "tiled": { "imageType": "tiled" },
+        "tips": { "role": "placeholder" },
+        "tmp": { "textBackend": "tmp" },
+        "tmpbt": { "main": "bt", "textBackend": "tmp" },
+        "tmpbtn": { "main": "bt", "textBackend": "tmp" },
+        "tmpbutton": { "main": "bt", "textBackend": "tmp" },
+        "tmpcheckbox": { "main": "tg", "textBackend": "tmp" },
+        "tmpdpd": { "main": "dpd", "textBackend": "tmp" },
+        "tmpdropdown": { "main": "dpd", "textBackend": "tmp" },
+        "tmpinput": { "main": "ipt", "textBackend": "tmp" },
+        "tmpinputbox": { "main": "ipt", "textBackend": "tmp" },
+        "tmpinputfield": { "main": "ipt", "textBackend": "tmp" },
+        "tmpipt": { "main": "ipt", "textBackend": "tmp" },
+        "tmplabel": { "main": "txt", "textBackend": "tmp" },
+        "tmptext": { "main": "txt", "textBackend": "tmp" },
+        "tmptg": { "main": "tg", "textBackend": "tmp" },
+        "tmptoggle": { "main": "tg", "textBackend": "tmp" },
+        "tmptxt": { "main": "txt", "textBackend": "tmp" },
+        "toggle": { "main": "tg" },
+        "togglelabel": { "role": "tglb" },
+        "togglemark": { "role": "mark" },
+        "toggletext": { "role": "tglb" },
+        "touch": { "role": "press" },
+        "txt": { "main": "txt" },
+        "ugui": { "textBackend": "ugui" },
+        "vbar": { "role": "vbar" },
+        "vbarbackground": { "role": "vbarbg" },
+        "vbarbg": { "role": "vbarbg" },
+        "vbarpanel": { "role": "vbarbg" },
+        "viewport": { "role": "vpt" },
+        "vpt": { "role": "vpt" }
+    }
+};
 // =============================
 
 // 检查是否有打开的文档
@@ -22,6 +151,51 @@ if (app.documents.length === 0) {
     alert("请先打开一个PSD文件！");
 } else {
     processAndExport();
+}
+
+function parseLayerTagState(layerName) {
+    var workingName = String(layerName || "").replace(/^\s+|\s+$/g, "");
+
+    if (/^refp\s+/i.test(workingName)) {
+        workingName = workingName.replace(/^refp\s+/i, "");
+    } else if (/^ref\s+/i.test(workingName)) {
+        workingName = workingName.replace(/^ref\s+/i, "");
+    }
+
+    var orderedTags = [];
+    while (workingName.length > 0) {
+        var splitIndex = workingName.lastIndexOf(".");
+        if (splitIndex <= 0 || splitIndex >= workingName.length - 1) {
+            break;
+        }
+
+        var token = workingName.substring(splitIndex + 1).toLowerCase();
+        var mapping = TAG_CONFIG.aliasMap[token];
+        if (!mapping) {
+            break;
+        }
+
+        orderedTags.unshift(mapping);
+        workingName = workingName.substring(0, splitIndex).replace(/\s+$/g, "");
+    }
+
+    var winners = {};
+    for (var i = 0; i < orderedTags.length; i++) {
+        var tagMapping = orderedTags[i];
+        for (var familyKey in tagMapping) {
+            if (tagMapping.hasOwnProperty(familyKey)) {
+                winners[familyKey] = tagMapping[familyKey];
+            }
+        }
+    }
+
+    return {
+        winners: winners
+    };
+}
+
+function hasExplicitImageMainTag(layerName) {
+    return parseLayerTagState(layerName).winners.main === "img";
 }
 
 /**
@@ -292,7 +466,7 @@ function processLayers(layers, statusCallback) {
         textConverted: 0,                 // 文本图层 → 图片(艺术字)
         effectRasterized: 0,              // 普通图层+特效 → 栅格化
         groupWithEffectMerged: 0,         // 组+特效 → 合并
-        groupMerged: 0,                   // 组包含.img → 合并
+        groupMerged: 0,                   // 最终主标签为.img 的组 → 合并
         clippingMaskMerged: 0,            // 剪贴蒙版 → 向下合并
         skipped: 0,
         errors: []
@@ -323,13 +497,13 @@ function processLayers(layers, statusCallback) {
                 
                 // ===== 处理图层组 =====
                 if (isGroup) {
-                    // 1. 优先检查组名是否包含 .img (不区分大小写)
-                    if (layerName.toLowerCase().indexOf(".img") !== -1) {
+                    // 1. 优先检查最终主标签是否显式落在 .img
+                    if (hasExplicitImageMainTag(layerName)) {
                         if (rasterizeGroup(layer)) {
                             stats.groupMerged++;
                             continue; 
                         } else {
-                            stats.errors.push("组(.img)合并失败: " + layerName + "，尝试处理子图层");
+                            stats.errors.push("组(显式.img)合并失败: " + layerName + "，尝试处理子图层");
                             processLayerRecursive(layer.layers);
                         }
                     } 
@@ -367,7 +541,7 @@ function processLayers(layers, statusCallback) {
                     } catch(e) {}
                     if (isText) {
                         //if (convertToSmartObject(layer))
-                        if((layerName.toLowerCase().indexOf(".img") !== -1))
+                        if (hasExplicitImageMainTag(layerName))
                         {
                             if( rasterizeLayerWithEffects(layer))
                                 stats.textConverted++;
@@ -467,7 +641,7 @@ function formatStats(stats, duration, savedFile) {
         message += "📄 文本图层 → 图片(艺术字图片): " + stats.textConverted + "\n";
     }
     if (stats.groupMerged > 0) {
-        message += "📁🔨 组(.img) → 合并为单图: " + stats.groupMerged + "\n";
+        message += "📁🔨 组(显式.img) → 合并为单图: " + stats.groupMerged + "\n";
     }
     if (stats.groupWithEffectMerged > 0) {
         message += "📁✨ 组+特效 → 合并为单图: " + stats.groupWithEffectMerged + "\n";
@@ -511,7 +685,7 @@ function formatStats(stats, duration, savedFile) {
         message += "━━━━━━━━━━━━━━━━━━━━\n";
         message += "检查要点：\n";
         message += "• 所有文本图层是否变成智能对象 📄→📦\n";
-        message += "• 组名含.img 是否已合并 📁🔨\n";
+        message += "• 最终主标签为.img 的组是否已合并 📁🔨\n";
         message += "• 带特效的组是否已合并 📁✨\n";
         message += "• 剪贴蒙版是否已向下合并 🔗→🖼️\n";
         message += "• 特效图层是否被正确栅格化 ✨→🖼️\n";
@@ -567,7 +741,7 @@ function processAndExport() {
                 "处理后的修改将保留在当前文档中！\n\n" +
                 "处理规则：\n" +
                 "• 所有文本图层 → 智能对象 ✅\n" +
-                "• 组名含.img 或 带特效的组 → 合并图层\n" +
+                "• 最终主标签为.img 或 带特效的组 → 合并图层\n" +
                 "• 剪贴蒙版图层 → 向下合并 🔗\n" +
                 "• 带特效的图层 → 栅格化\n" +
                 "是否继续？"
@@ -613,7 +787,7 @@ function processAndExport() {
             } else {
                 alert("导出已取消。\n\n处理统计：已转换 " + 
                     stats.textConverted + 
-                    " 个文本图层，合并 " + stats.groupMerged + " 个.img组，合并 " + stats.groupWithEffectMerged + 
+                    " 个文本图层，合并 " + stats.groupMerged + " 个显式.img组，合并 " + stats.groupWithEffectMerged + 
                     " 个特效组，合并 " + stats.clippingMaskMerged + " 个剪贴蒙版，栅格化 " + 
                     stats.effectRasterized + 
                     " 个特效图层。");

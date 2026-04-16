@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 974569662, guid: 3bd69f22ccdd2b242809f003b7210174, type: 3}
+  m_Script: {fileID: 974569662, guid: 1e3b82722ffbbce45afe836edc37370e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UIImagesOutputDir: Assets\Plugins\PSD2UIForm\Examples
-  UIFormOutputDir: Assets
+  UIFormOutputDir: Assets\Plugins\PSD2UIForm\Examples
   UseUIFormOutputDir: 1
   CompressImage: 0
   LastUIFormOutputDir: Assets
