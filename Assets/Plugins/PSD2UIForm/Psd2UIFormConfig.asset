@@ -9,150 +9,135 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -231125866, guid: 1e3b82722ffbbce45afe836edc37370e, type: 3}
+  m_Script: {fileID: -231125866, guid: ac131fcb0d878244186e2807fd142bf6, type: 3}
   m_Name: Psd2UIFormConfig
   m_EditorClassIdentifier: 
   defaultTextType: 3
   defaultImageType: 1
   forceUseTMP: 0
-  uiFormTemplate: {fileID: 3548335019738977768, guid: 6d8c85c377edc7240ace111136f916b1,
-    type: 3}
+  uiFormTemplate: {fileID: 3548335019738977768, guid: 6d8c85c377edc7240ace111136f916b1, type: 3}
   rules:
   - UIType: 0
-    UITypeDesc: "\u7A7A\u8282\u70B9"
+    UITypeDesc: "\u7A7A\u503C"
     TypeMatches: []
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u666E\u901A\u5206\u7EC4/\u7A7A\u8282\u70B9\u3002\u4E0D\u76F4\u63A5\u751F\u6210\u63A7\u4EF6\uFF0C\u901A\u5E38\u7528\u6765\u6574\u7406\u5C42\u7EA7\uFF0C\u6216\u4F5C\u4E3A\u7EC4\u5408\u63A7\u4EF6\u7684\u7236\u7EC4\u3002"
+    Comment: "\u5185\u90E8\u4FDD\u7559\u7C7B\u578B\uFF0C\u4E0D\u7528\u4E8EPSD\u56FE\u5C42\u8BC6\u522B\u3001AI\u9884\u6D4B\u6216UI\u751F\u6210\u3002"
   - UIType: 1
     UITypeDesc: "\u56FE\u7247"
     TypeMatches:
     - img
     - image
-    UIPrefab: {fileID: 539658542252911146, guid: 45ec11f7e92bc6943b46739017fb577e,
-      type: 3}
+    UIPrefab: {fileID: 539658542252911146, guid: 45ec11f7e92bc6943b46739017fb577e, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ImageHelper
-    Comment: "\u666E\u901A UI \u56FE\u7247\uFF0C\u5BFC\u51FA\u4E3A Sprite\uFF0C\u53EF\u7528\u4E8E\u5E95\u56FE\u3001\u56FE\u6807\u3001\u88C5\u9970\u56FE\uFF0C\u4E5F\u652F\u6301\u4E5D\u5BAB\u683C\u62C9\u4F38\u3002"
+    Comment: "\u666E\u901ASprite\u56FE\u7247\u3002\u7528\u4E8E\u72EC\u7ACB\u56FE\u6807\u3001\u88C5\u9970\u56FE\u3001\u9762\u677F\u5E95\u56FE\u3001\u53EF\u4E5D\u5BAB\u683C\u62C9\u4F38\u56FE\u7247\uFF1B\u4E0D\u662F\u590D\u5408\u63A7\u4EF6\u4E13\u5C5E\u5B50\u90E8\u4EF6\u65F6\u4F7F\u7528\u3002"
   - UIType: 2
-    UITypeDesc: "\u8D34\u56FE"
+    UITypeDesc: "\u539F\u59CB\u8D34\u56FE"
     TypeMatches:
     - rimg
     - tex
     - rawimg
     - rawimage
-    UIPrefab: {fileID: 3143317634023966962, guid: 7f36da2663cfd5749ad0e39fb84cab11,
-      type: 3}
+    UIPrefab: {fileID: 3143317634023966962, guid: 7f36da2663cfd5749ad0e39fb84cab11, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.RawImageHelper
-    Comment: "\u539F\u59CB\u8D34\u56FE\u663E\u793A\uFF0C\u5BFC\u51FA\u4E3A Texture\uFF0C\u9002\u5408\u7167\u7247\u3001\u89C6\u9891\u5E27\u6216\u7279\u6B8A\u8D34\u56FE\uFF0C\u4E0D\u505A\u4E5D\u5BAB\u683C\u3002"
+    Comment: "RawImage\u8D34\u56FE\u3002\u7528\u4E8E\u9700\u8981Texture\u76F4\u663E\u7684\u7167\u7247\u3001\u89C6\u9891\u5E27\u3001RenderTexture\u6216\u7279\u6B8A\u7EB9\u7406\uFF1B\u4E0D\u505ASprite\u4E5D\u5BAB\u683C\u3002"
   - UIType: 3
     UITypeDesc: "\u6587\u672C"
     TypeMatches:
     - txt
     - text
     - label
-    UIPrefab: {fileID: 2142815555493371067, guid: a1a4336caef721241a77847ef2fe31c2,
-      type: 3}
+    UIPrefab: {fileID: 2142815555493371067, guid: a1a4336caef721241a77847ef2fe31c2, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TextHelper
-    Comment: "UGUI Text\u3002\u5EFA\u8BAE\u4F7F\u7528\u771F\u6B63\u7684 PSD \u6587\u672C\u56FE\u5C42\uFF0C\u65B9\u4FBF\u8FD8\u539F\u6587\u5B57\u5185\u5BB9\u3001\u5B57\u53F7\u3001\u989C\u8272\u548C\u6392\u7248\u3002"
+    Comment: "UGUI Text\u6587\u672C\u3002\u4EC5\u7528\u4E8E\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\uFF0C\u7528\u6765\u8FD8\u539F\u6587\u5B57\u5185\u5BB9\u3001\u5B57\u53F7\u3001\u989C\u8272\u548C\u6392\u7248\uFF1B\u4F4D\u56FE\u827A\u672F\u5B57\u5E94\u8BC6\u522B\u4E3AImage\u3002"
   - UIType: 12
     UITypeDesc: "TMP\u6587\u672C"
     TypeMatches:
     - tmptxt
     - tmptext
     - tmplabel
-    UIPrefab: {fileID: 7316614802678630410, guid: 560775e0937eb6146b144777c382cd29,
-      type: 3}
+    UIPrefab: {fileID: 7316614802678630410, guid: 560775e0937eb6146b144777c382cd29, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPTextHelper
-    Comment: "TextMeshPro \u6587\u672C\u3002\u9700\u8981\u66F4\u4E30\u5BCC\u7684\u6587\u5B57\u6548\u679C\u65F6\u4F7F\u7528\uFF1B\u5982\u679C\u5F00\u542F\u4E86\u5F3A\u5236\u4F18\u5148
-      TMP\uFF0C\u666E\u901A Text \u4E5F\u4F1A\u81EA\u52A8\u8F6C\u6210 TMP\u3002"
+    Comment: "TextMeshPro\u6587\u672C\u3002\u4EC5\u7528\u4E8E\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\uFF0C\u9700\u8981TMP\u5B57\u4F53/\u5BCC\u6587\u672C/\u63CF\u8FB9\u7B49\u6587\u672C\u6548\u679C\u65F6\u4F7F\u7528\uFF1B\u4F4D\u56FE\u827A\u672F\u5B57\u4ECD\u8BC6\u522B\u4E3AImage\u3002"
   - UIType: 10
     UITypeDesc: "\u906E\u7F69"
     TypeMatches:
     - msk
     - mask
-    UIPrefab: {fileID: 1362532462938489664, guid: fa8d704d2340c424b8d1f4fff0abc7cb,
-      type: 3}
+    UIPrefab: {fileID: 1362532462938489664, guid: fa8d704d2340c424b8d1f4fff0abc7cb, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.MaskHelper
-    Comment: "\u906E\u7F69\u533A\u57DF\u3002\u4F1A\u6839\u636E\u56FE\u5C42 Alpha
-      \u9650\u5236\u53EF\u89C1\u8303\u56F4\uFF0C\u5E38\u7528\u4E8E\u5934\u50CF\u88C1\u5207\u3001\u7A97\u53E3\u88C1\u5207\u3001\u5217\u8868\u663E\u793A\u533A\u57DF\u3002"
+    Comment: "Mask\u906E\u7F69\u533A\u57DF\u3002\u7528\u4E8E\u5934\u50CF\u88C1\u5207\u3001\u7A97\u53E3\u88C1\u5207\u3001\u5217\u8868\u53EF\u89C1\u533A\u57DF\u7B49\u6309Alpha\u9650\u5236\u5B50\u5185\u5BB9\u663E\u793A\u7684\u56FE\u5C42\u3002"
   - UIType: 11
-    UITypeDesc: "\u7EAF\u8272"
+    UITypeDesc: "\u7EAF\u8272\u77E9\u5F62"
     TypeMatches:
     - col
     - color
     - fillcolor
-    UIPrefab: {fileID: 1507491723081099425, guid: cadb2a7dd614b5d489527d2721186e42,
-      type: 3}
+    UIPrefab: {fileID: 1507491723081099425, guid: cadb2a7dd614b5d489527d2721186e42, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.FillColorHelper
-    Comment: "\u7EAF\u8272\u77E9\u5F62\u3002\u9002\u5408\u7EAF\u5E95\u8272\u5757\u3001\u8272\u6761\u3001\u9762\u677F\u5E95\u8272\uFF0CUnity
-      \u4F1A\u76F4\u63A5\u7528\u989C\u8272\u8FD8\u539F\uFF0C\u901A\u5E38\u4E0D\u5FC5\u5355\u72EC\u5BFC\u51FA\u56FE\u7247\u3002"
+    Comment: "\u7EAF\u8272\u586B\u5145\u5757\u3002\u7528\u4E8E\u7EAF\u8272\u80CC\u666F\u3001\u8272\u6761\u3001\u5206\u5272\u7EBF\u3001\u9762\u677F\u5E95\u8272\uFF1BUnity\u76F4\u63A5\u7528\u989C\u8272\u8FD8\u539F\uFF0C\u901A\u5E38\u4E0D\u5BFC\u51FA\u56FE\u7247\u3002"
   - UIType: 101
-    UITypeDesc: "\u80CC\u666F"
+    UITypeDesc: "\u63A7\u4EF6\u80CC\u666F"
     TypeMatches:
     - bg
     - background
-    - panel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u7EC4\u5408\u63A7\u4EF6\u7684\u80CC\u666F\u56FE\u5C42\u3002\u5E38\u7528\u4E8E
-      Button\u3001Toggle\u3001InputField\u3001Dropdown\u3001ScrollView \u7684\u5E95\u56FE\u3002"
+    Comment: "\u590D\u5408\u63A7\u4EF6\u7684\u76F4\u63A5\u80CC\u666F/\u5E95\u56FE\u5B50\u8282\u70B9\u3002\u7528\u4E8EButton\u3001Toggle\u3001InputField\u3001Dropdown\u3001Slider\u3001ScrollView\u7B49\u63A7\u4EF6\u5185\u90E8\u5E95\u56FE\uFF1B\u666E\u901A\u88C5\u9970\u80CC\u666F\u8BF7\u7528Image\u6216FillColor\u3002"
   - UIType: 4
     UITypeDesc: "\u6309\u94AE"
     TypeMatches:
     - bt
     - btn
     - button
-    UIPrefab: {fileID: 3046286455018181150, guid: 7fb39a4b45dce0f4f82b619c80b0d811,
-      type: 3}
+    UIPrefab: {fileID: 3046286455018181150, guid: 7fb39a4b45dce0f4f82b619c80b0d811, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ButtonHelper
-    Comment: "\u6309\u94AE\u4E3B\u8282\u70B9\u3002\u53EF\u4EE5\u662F\u5355\u4E2A\u56FE\u5C42\uFF0C\u4E5F\u53EF\u4EE5\u662F\u4E00\u4E2A\u7EC4\uFF1B\u7EC4\u5185\u901A\u5E38\u653E\u80CC\u666F\u548C\u6309\u94AE\u6587\u5B57\u3002"
+    Comment: "Button\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u53EF\u7531\u5355\u56FE\u5C42\u6216\u7EC4\u8868\u793A\uFF1B\u82E5\u6709\u80CC\u666F\u3001\u6587\u5B57\u3001\u6309\u4E0B/\u7981\u7528\u7B49\u72B6\u6001\u56FE\uFF0C\u5E94\u4F5C\u4E3A\u6309\u94AE\u7684\u76F4\u63A5\u5B50\u8282\u70B9\u3002"
   - UIType: 13
     UITypeDesc: "TMP\u6309\u94AE"
     TypeMatches:
     - tmpbt
     - tmpbtn
     - tmpbutton
-    UIPrefab: {fileID: 3046286455018181150, guid: f91a5a8f057245e428f6532afb0e2c11,
-      type: 3}
+    UIPrefab: {fileID: 3046286455018181150, guid: f91a5a8f057245e428f6532afb0e2c11, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPButtonHelper
-    Comment: "TMP \u6309\u94AE\u4E3B\u8282\u70B9\u3002\u7ED3\u6784\u548C Button \u4E00\u6837\uFF0C\u53EA\u662F\u6309\u94AE\u6587\u5B57\u4F7F\u7528
-      TMP\u3002"
+    Comment: "TMP Button\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7ED3\u6784\u4E0EButton\u76F8\u540C\uFF0C\u4F46\u6309\u94AE\u6587\u5B57\u4F7F\u7528TMP\u6587\u672C\uFF1BAI\u8BC6\u522B\u65F6\u901A\u5E38\u4ECD\u6309Button\u8BED\u4E49\u5224\u65AD\u3002"
   - UIType: 102
-    UITypeDesc: "\u6309\u94AE\u9AD8\u4EAE"
+    UITypeDesc: "\u6309\u94AE\u9AD8\u4EAE\u56FE"
     TypeMatches:
     - onover
     - light
     - highlight
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6309\u94AE\u9AD8\u4EAE\u72B6\u6001\u56FE\u3002\u53EA\u6709\u505A\u591A\u72B6\u6001\u5207\u56FE\u65F6\u624D\u9700\u8981\uFF0C\u9F20\u6807\u79FB\u5165\u6216\u9AD8\u4EAE\u65F6\u663E\u793A\u3002"
+    Comment: "Button\u9F20\u6807\u60AC\u505C/\u9AD8\u4EAE\u72B6\u6001\u56FE\u7247\u3002\u53EA\u5728\u6309\u94AE\u63D0\u4F9B\u591A\u72B6\u6001\u5207\u56FE\u65F6\u4F7F\u7528\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8E\u6309\u94AE\u3002"
   - UIType: 103
-    UITypeDesc: "\u6309\u94AE\u6309\u4E0B"
+    UITypeDesc: "\u6309\u94AE\u6309\u4E0B\u56FE"
     TypeMatches:
     - press
     - click
     - touch
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6309\u94AE\u6309\u4E0B\u72B6\u6001\u56FE\u3002\u53EA\u6709\u505A\u591A\u72B6\u6001\u5207\u56FE\u65F6\u624D\u9700\u8981\uFF0C\u6309\u4E0B\u65F6\u663E\u793A\u3002"
+    Comment: "Button\u6309\u4E0B\u72B6\u6001\u56FE\u7247\u3002\u53EA\u5728\u6309\u94AE\u63D0\u4F9B\u591A\u72B6\u6001\u5207\u56FE\u65F6\u4F7F\u7528\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8E\u6309\u94AE\u3002"
   - UIType: 104
-    UITypeDesc: "\u6309\u94AE\u9009\u4E2D"
+    UITypeDesc: "\u6309\u94AE\u9009\u4E2D\u56FE"
     TypeMatches:
     - select
     - focus
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6309\u94AE\u9009\u4E2D\u72B6\u6001\u56FE\u3002\u53EA\u6709\u505A\u591A\u72B6\u6001\u5207\u56FE\u65F6\u624D\u9700\u8981\uFF0C\u88AB\u9009\u4E2D\u65F6\u663E\u793A\u3002"
+    Comment: "Button\u9009\u4E2D/\u7126\u70B9\u72B6\u6001\u56FE\u7247\u3002\u53EA\u5728\u6309\u94AE\u63D0\u4F9B\u591A\u72B6\u6001\u5207\u56FE\u65F6\u4F7F\u7528\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8E\u6309\u94AE\u3002"
   - UIType: 105
-    UITypeDesc: "\u6309\u94AE\u7981\u7528"
+    UITypeDesc: "\u6309\u94AE\u7981\u7528\u56FE"
     TypeMatches:
     - disable
     - forbid
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6309\u94AE\u7981\u7528\u72B6\u6001\u56FE\u3002\u53EA\u6709\u505A\u591A\u72B6\u6001\u5207\u56FE\u65F6\u624D\u9700\u8981\uFF0C\u4E0D\u53EF\u70B9\u51FB\u65F6\u663E\u793A\u3002"
+    Comment: "Button\u4E0D\u53EF\u70B9\u51FB/\u7981\u7528\u72B6\u6001\u56FE\u7247\u3002\u53EA\u5728\u6309\u94AE\u63D0\u4F9B\u591A\u72B6\u6001\u5207\u56FE\u65F6\u4F7F\u7528\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8E\u6309\u94AE\u3002"
   - UIType: 106
-    UITypeDesc: "\u6309\u94AE\u6587\u672C"
+    UITypeDesc: "\u6309\u94AE\u6587\u5B57"
     TypeMatches:
     - bttxt
     - btlb
@@ -162,30 +147,25 @@ MonoBehaviour:
     - buttonlabel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6309\u94AE\u4E0A\u7684\u6587\u5B57\u5B50\u56FE\u5C42\u3002\u5EFA\u8BAE\u4F7F\u7528
-      PSD \u6587\u672C\u56FE\u5C42\uFF1B\u5982\u679C\u662F\u827A\u672F\u5B57\u56FE\u7247\uFF0C\u8BF7\u6539\u6807\u4E3A
-      Image\u3002"
+    Comment: "Button\u4E0A\u7684\u6587\u5B57\u5B50\u8282\u70B9\u3002\u5FC5\u987B\u662F\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\u5E76\u5F52\u5C5E\u4E8E\u6309\u94AE\uFF1B\u4F4D\u56FE\u827A\u672F\u5B57\u6309\u94AE\u6807\u9898\u8BF7\u7528Image\u3002"
   - UIType: 5
     UITypeDesc: "\u4E0B\u62C9\u6846"
     TypeMatches:
     - dpd
     - dropdown
-    UIPrefab: {fileID: 766589674357564663, guid: 88d84c420a77ea14fb858d5475f873ff,
-      type: 3}
+    UIPrefab: {fileID: 766589674357564663, guid: 88d84c420a77ea14fb858d5475f873ff, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.DropdownHelper
-    Comment: "\u4E0B\u62C9\u6846\u4E3B\u8282\u70B9\u3002\u901A\u5E38\u7531\u80CC\u666F\u3001\u5F53\u524D\u663E\u793A\u6587\u5B57\u3001\u7BAD\u5934\u3001\u4E0B\u62C9\u5217\u8868\u548C\u5217\u8868\u9879\u7EC4\u6210\u3002"
+    Comment: "Dropdown\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7531\u80CC\u666F\u3001\u5F53\u524D\u9009\u4E2D\u9879\u6587\u5B57\u3001\u53F3\u4FA7\u7BAD\u5934\u4EE5\u53CA\u53EF\u9009\u4E0B\u62C9\u5217\u8868\u7ED3\u6784\u7EC4\u6210\u3002"
   - UIType: 14
     UITypeDesc: "TMP\u4E0B\u62C9\u6846"
     TypeMatches:
     - tmpdpd
     - tmpdropdown
-    UIPrefab: {fileID: 2542422486251405505, guid: e2ec1e4429406d54db75bcda08e8b68d,
-      type: 3}
+    UIPrefab: {fileID: 2542422486251405505, guid: e2ec1e4429406d54db75bcda08e8b68d, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPDropdownHelper
-    Comment: "TMP \u4E0B\u62C9\u6846\u4E3B\u8282\u70B9\u3002\u7ED3\u6784\u548C Dropdown
-      \u4E00\u6837\uFF0C\u53EA\u662F\u6587\u5B57\u4F7F\u7528 TMP\u3002"
+    Comment: "TMP Dropdown\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7ED3\u6784\u4E0EDropdown\u76F8\u540C\uFF0C\u4F46\u663E\u793A\u6587\u5B57\u4F7F\u7528TMP\u6587\u672C\uFF1BAI\u8BC6\u522B\u65F6\u901A\u5E38\u4ECD\u6309Dropdown\u8BED\u4E49\u5224\u65AD\u3002"
   - UIType: 107
-    UITypeDesc: "\u4E0B\u62C9\u6846\u6587\u672C"
+    UITypeDesc: "\u4E0B\u62C9\u6846\u663E\u793A\u6587\u5B57"
     TypeMatches:
     - dpdlb
     - dpdlabel
@@ -197,7 +177,7 @@ MonoBehaviour:
     - dropdownlb
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u4E0B\u62C9\u6846\u5F53\u524D\u9009\u4E2D\u9879\u663E\u793A\u6587\u5B57\u3002"
+    Comment: "Dropdown\u5F53\u524D\u9009\u4E2D\u9879\u7684\u663E\u793A\u6587\u5B57\u5B50\u8282\u70B9\u3002\u5FC5\u987B\u662F\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\u5E76\u5F52\u5C5E\u4E8EDropdown\u3002"
   - UIType: 108
     UITypeDesc: "\u4E0B\u62C9\u6846\u7BAD\u5934"
     TypeMatches:
@@ -207,7 +187,7 @@ MonoBehaviour:
     - dropdownarrow
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u4E0B\u62C9\u6846\u53F3\u4FA7\u7BAD\u5934\u56FE\u6807\u3002"
+    Comment: "Dropdown\u53F3\u4FA7\u5C55\u5F00\u7BAD\u5934/\u4E09\u89D2\u56FE\u6807\u5B50\u8282\u70B9\u3002\u5FC5\u987B\u5F52\u5C5E\u4E8EDropdown\uFF1B\u666E\u901A\u65B9\u5411\u56FE\u6807\u8BF7\u7528Image\u3002"
   - UIType: 6
     UITypeDesc: "\u8F93\u5165\u6846"
     TypeMatches:
@@ -215,10 +195,9 @@ MonoBehaviour:
     - input
     - inputbox
     - inputfield
-    UIPrefab: {fileID: 4570988585872243248, guid: 00448c5c38cef294d849b4cf6d0c6965,
-      type: 3}
+    UIPrefab: {fileID: 4570988585872243248, guid: 00448c5c38cef294d849b4cf6d0c6965, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.InputFieldHelper
-    Comment: "\u8F93\u5165\u6846\u4E3B\u8282\u70B9\u3002\u901A\u5E38\u7531\u80CC\u666F\u3001\u5360\u4F4D\u63D0\u793A\u6587\u5B57\u3001\u8F93\u5165\u5185\u5BB9\u6587\u5B57\u7EC4\u6210\u3002"
+    Comment: "InputField\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7531\u80CC\u666F\u3001\u5360\u4F4D\u63D0\u793A\u6587\u5B57\u3001\u8F93\u5165\u5185\u5BB9\u6587\u5B57\u7EC4\u6210\uFF0C\u7528\u4E8E\u7528\u6237\u53EF\u8F93\u5165\u6587\u672C\u7684\u533A\u57DF\u3002"
   - UIType: 15
     UITypeDesc: "TMP\u8F93\u5165\u6846"
     TypeMatches:
@@ -226,13 +205,11 @@ MonoBehaviour:
     - tmpinput
     - tmpinputbox
     - tmpinputfield
-    UIPrefab: {fileID: 3592617959722875999, guid: e337f73260577d14b93f65c94c11dcea,
-      type: 3}
+    UIPrefab: {fileID: 3592617959722875999, guid: e337f73260577d14b93f65c94c11dcea, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPInputFieldHelper
-    Comment: "TMP \u8F93\u5165\u6846\u4E3B\u8282\u70B9\u3002\u7ED3\u6784\u548C InputField
-      \u4E00\u6837\uFF0C\u53EA\u662F\u6587\u5B57\u4F7F\u7528 TMP\u3002"
+    Comment: "TMP InputField\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7ED3\u6784\u4E0EInputField\u76F8\u540C\uFF0C\u4F46\u6587\u672C\u4F7F\u7528TMP\uFF1BAI\u8BC6\u522B\u65F6\u901A\u5E38\u4ECD\u6309InputField\u8BED\u4E49\u5224\u65AD\u3002"
   - UIType: 109
-    UITypeDesc: "\u8F93\u5165\u6846\u63D0\u793A\u6587\u672C"
+    UITypeDesc: "\u8F93\u5165\u6846\u5360\u4F4D\u6587\u672C"
     TypeMatches:
     - placeholder
     - ipttips
@@ -240,7 +217,7 @@ MonoBehaviour:
     - inputtips
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u8F93\u5165\u6846\u91CC\u7684\u5360\u4F4D\u63D0\u793A\u6587\u5B57\uFF0C\u4F8B\u5982\u201C\u8BF7\u8F93\u5165\u7528\u6237\u540D\u201D\u3002"
+    Comment: "InputField\u672A\u8F93\u5165\u65F6\u663E\u793A\u7684placeholder\u63D0\u793A\u6587\u5B57\uFF0C\u5982\u201C\u8BF7\u8F93\u5165\u7528\u6237\u540D\u201D\u3002\u5FC5\u987B\u662F\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\u5E76\u5F52\u5C5E\u4E8EInputField\u3002"
   - UIType: 110
     UITypeDesc: "\u8F93\u5165\u6846\u5185\u5BB9\u6587\u672C"
     TypeMatches:
@@ -252,39 +229,56 @@ MonoBehaviour:
     - inputlabel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u8F93\u5165\u6846\u6B63\u6587\u6587\u5B57\u6837\u5F0F\uFF0C\u7528\u6765\u5B9A\u4E49\u7528\u6237\u5B9E\u9645\u8F93\u5165\u540E\u7684\u663E\u793A\u6548\u679C\u3002"
+    Comment: "InputField\u7528\u6237\u8F93\u5165\u540E\u7684\u6B63\u6587\u6587\u5B57\u6837\u5F0F\u8282\u70B9\u3002\u5FC5\u987B\u662F\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\u5E76\u5F52\u5C5E\u4E8EInputField\u3002"
   - UIType: 7
-    UITypeDesc: "\u52FE\u9009\u6846"
+    UITypeDesc: "\u52FE\u9009/\u5355\u9009\u6846"
     TypeMatches:
     - tg
     - toggle
     - checkbox
-    UIPrefab: {fileID: 4828739222813654848, guid: 66329988bd135fd49bf0d5927b882f6c,
-      type: 3}
+    UIPrefab: {fileID: 4828739222813654848, guid: 66329988bd135fd49bf0d5927b882f6c, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ToggleHelper
-    Comment: "\u52FE\u9009\u6846/\u5355\u9009\u6846\u4E3B\u8282\u70B9\u3002\u901A\u5E38\u7531\u80CC\u666F\u3001\u52FE\u9009\u6807\u8BB0\u548C\u8BF4\u660E\u6587\u5B57\u7EC4\u6210\u3002"
+    Comment: "Toggle\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7528\u4E8E\u5F00\u5173\u3001\u590D\u9009\u6846\u3001\u5355\u9009\u9879\uFF1B\u901A\u5E38\u7531\u80CC\u666F\u3001\u9009\u4E2D\u6807\u8BB0\u548C\u8BF4\u660E\u6587\u5B57\u7EC4\u6210\u3002"
   - UIType: 16
     UITypeDesc: "TMP\u52FE\u9009\u6846"
     TypeMatches:
     - tmptg
     - tmptoggle
     - tmpcheckbox
-    UIPrefab: {fileID: 4828739222813654848, guid: e221135e4d6e6e5479f64351d4de16bb,
-      type: 3}
+    UIPrefab: {fileID: 4828739222813654848, guid: e221135e4d6e6e5479f64351d4de16bb, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPToggleHelper
-    Comment: "TMP \u52FE\u9009\u6846/\u5355\u9009\u6846\u4E3B\u8282\u70B9\u3002\u7ED3\u6784\u548C
-      Toggle \u4E00\u6837\uFF0C\u53EA\u662F\u6587\u5B57\u4F7F\u7528 TMP\u3002"
+    Comment: "TMP Toggle\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7ED3\u6784\u4E0EToggle\u76F8\u540C\uFF0C\u4F46\u8BF4\u660E\u6587\u5B57\u4F7F\u7528TMP\uFF1BAI\u8BC6\u522B\u65F6\u901A\u5E38\u4ECD\u6309Toggle\u8BED\u4E49\u5224\u65AD\u3002"
+  - UIType: 17
+    UITypeDesc: "\u666E\u901A\u5BB9\u5668"
+    TypeMatches:
+    - panel
+    UIPrefab: {fileID: 0}
+    UIHelper: UGF.EditorTools.Psd2UGUI.PanelHelper
+    Comment: "Panel\u666E\u901A\u5BB9\u5668\u8282\u70B9\u3002\u7528\u4E8E\u7EC4\u7EC7\u4E00\u7EC4UI\u5143\u7D20\u6216\u9762\u677F\uFF1B\u82E5\u5B58\u5728\u76F4\u63A5\u5B50
+      .bg\uFF0C\u5219\u751F\u6210\u5E26 Image \u7684\u6839\u8282\u70B9\u5E76\u7ED1\u5B9A
+      .bg\uFF1B\u5426\u5219\u751F\u6210\u4EC5\u542B RectTransform \u7684\u7A7A\u5BB9\u5668\u3002"
+  - UIType: 18
+    UITypeDesc: "\u5355\u9009\u7EC4\u5BB9\u5668"
+    TypeMatches:
+    - tgg
+    - togglegroup
+    - radiogroup
+    UIPrefab: {fileID: 0}
+    UIHelper: UGF.EditorTools.Psd2UGUI.ToggleGroupHelper
+    Comment: "ToggleGroup\u5355\u9009\u7EC4\u5BB9\u5668\u3002\u4EC5\u53EF\u6807\u8BB0\u5728LayerGroup\u56FE\u5C42\u4E0A\uFF1B\u82E5\u5B58\u5728\u76F4\u63A5\u5B50
+      .bg\uFF0C\u5219\u751F\u6210\u5E26 Image \u7684\u6839\u8282\u70B9\u5E76\u7ED1\u5B9A
+      .bg\uFF0C\u540C\u65F6\u5728\u6839\u8282\u70B9\u9644\u52A0 ToggleGroup \u7EC4\u4EF6\u3002"
   - UIType: 111
-    UITypeDesc: "\u52FE\u9009\u6846\u6807\u8BB0"
+    UITypeDesc: "\u52FE\u9009\u6807\u8BB0"
     TypeMatches:
     - mark
     - tgmark
     - togglemark
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u52FE\u9009\u6846\u9009\u4E2D\u540E\u7684\u6807\u8BB0\u56FE\u5C42\uFF0C\u4F8B\u5982\u5BF9\u52FE\u3001\u5706\u70B9\u3002"
+    Comment: "Toggle\u9009\u4E2D\u540E\u663E\u793A\u7684\u52FE\u3001\u5706\u70B9\u6216\u5F00\u5173\u6ED1\u5757\u56FE\u5C42\u3002\u5FC5\u987B\u5F52\u5C5E\u4E8EToggle\uFF1B\u672A\u9009\u4E2D\u5E95\u56FE\u7528Background\u6216Image\u3002"
   - UIType: 112
-    UITypeDesc: "\u52FE\u9009\u6846\u6587\u672C"
+    UITypeDesc: "\u52FE\u9009\u6846\u6587\u5B57"
     TypeMatches:
     - tglb
     - tgtxt
@@ -292,47 +286,45 @@ MonoBehaviour:
     - togglelabel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u52FE\u9009\u6846\u53F3\u4FA7\u8BF4\u660E\u6587\u5B57\u3002"
+    Comment: "Toggle\u53F3\u4FA7/\u65C1\u8FB9\u7684\u8BF4\u660E\u6587\u5B57\u5B50\u8282\u70B9\u3002\u5FC5\u987B\u662F\u771F\u5B9EPSD\u6587\u672C\u56FE\u5C42\u5E76\u5F52\u5C5E\u4E8EToggle\u3002"
   - UIType: 8
-    UITypeDesc: "\u8FDB\u5EA6\u6761"
+    UITypeDesc: "\u6ED1\u52A8\u6761/\u8FDB\u5EA6\u6761"
     TypeMatches:
     - sld
     - slider
-    UIPrefab: {fileID: 3439118813606271523, guid: fe19cbe4c01b78945a8888d2bdd61306,
-      type: 3}
+    UIPrefab: {fileID: 3439118813606271523, guid: fe19cbe4c01b78945a8888d2bdd61306, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.SliderHelper
-    Comment: "\u6ED1\u52A8\u6761/\u8FDB\u5EA6\u6761\u4E3B\u8282\u70B9\u3002\u901A\u5E38\u7531\u80CC\u666F\u3001\u586B\u5145\u6761\u548C\u53EF\u9009\u7684\u62D6\u62FD\u624B\u67C4\u7EC4\u6210\u3002"
+    Comment: "Slider\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7528\u4E8E\u8FDB\u5EA6\u6761\u6216\u53EF\u62D6\u52A8\u6ED1\u6761\uFF0C\u901A\u5E38\u7531\u80CC\u666F\u8F68\u9053\u3001\u586B\u5145\u533A\u57DF\u548C\u53EF\u9009\u62D6\u52A8\u624B\u67C4\u7EC4\u6210\u3002"
   - UIType: 113
-    UITypeDesc: "\u8FDB\u5EA6\u6761\u586B\u5145\u56FE"
+    UITypeDesc: "\u6ED1\u52A8\u6761\u586B\u5145"
     TypeMatches:
     - fill
     - sldfill
     - sliderfill
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6ED1\u52A8\u6761\u6216\u8FDB\u5EA6\u6761\u7684\u586B\u5145\u533A\u57DF\u3002"
+    Comment: "Slider\u5F53\u524D\u8FDB\u5EA6/\u6570\u503C\u5BF9\u5E94\u7684\u586B\u5145\u533A\u57DF\u5B50\u8282\u70B9\uFF0C\u901A\u5E38\u662F\u6A2A\u5411\u6216\u7EB5\u5411\u6761\u5F62\u56FE\u7247\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8ESlider\u3002"
   - UIType: 114
-    UITypeDesc: "\u8FDB\u5EA6\u6761\u6ED1\u5757"
+    UITypeDesc: "\u6ED1\u52A8\u6761\u624B\u67C4"
     TypeMatches:
     - handle
     - sldhandle
     - sliderhandle
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6ED1\u52A8\u6761\u53EF\u62D6\u62FD\u7684\u624B\u67C4\uFF1B\u5982\u679C\u53EA\u662F\u9759\u6001\u8FDB\u5EA6\u6761\uFF0C\u53EF\u4EE5\u4E0D\u63D0\u4F9B\u3002"
+    Comment: "Slider\u53EF\u62D6\u52A8\u624B\u67C4/\u6ED1\u5757\u5B50\u8282\u70B9\u3002\u4EC5\u5728\u53EF\u4EA4\u4E92\u6ED1\u6761\u9700\u8981\u62D6\u62FD\u70B9\u65F6\u4F7F\u7528\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8ESlider\u3002"
   - UIType: 9
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868"
+    UITypeDesc: "\u6EDA\u52A8\u89C6\u56FE/\u5217\u8868"
     TypeMatches:
     - sv
     - scrollview
     - lst
     - listview
-    UIPrefab: {fileID: 2331052941645011039, guid: d99ca54e56291f84597596e620be1b4b,
-      type: 3}
+    UIPrefab: {fileID: 2331052941645011039, guid: d99ca54e56291f84597596e620be1b4b, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ScrollViewHelper
-    Comment: "\u6EDA\u52A8\u5217\u8868\u4E3B\u8282\u70B9\u3002\u901A\u5E38\u7531\u80CC\u666F\u3001\u89C6\u53E3\u3001\u5185\u5BB9\u533A\u4EE5\u53CA\u6C34\u5E73/\u5782\u76F4\u6EDA\u52A8\u6761\u7EC4\u6210\u3002"
+    Comment: "ScrollView\u4E3B\u63A7\u4EF6\u8282\u70B9\u3002\u7528\u4E8E\u53EF\u6EDA\u52A8\u5217\u8868\u6216\u533A\u57DF\uFF0C\u7531\u80CC\u666F\u3001Viewport\u53EF\u89C1\u533A\u57DF\u3001Content\u5185\u5BB9\u533A\u548C\u53EF\u9009\u6EDA\u52A8\u6761\u7EC4\u6210\u3002"
   - UIType: 115
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868\u89C6\u53E3"
+    UITypeDesc: "\u6EDA\u52A8\u89C6\u56FE\u89C6\u53E3"
     TypeMatches:
     - vpt
     - viewport
@@ -342,43 +334,43 @@ MonoBehaviour:
     - scrollviewport
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6EDA\u52A8\u5217\u8868\u53EF\u89C1\u533A\u57DF\u7684\u906E\u7F69\u5C42\uFF0C\u8D85\u51FA\u8FD9\u4E2A\u8303\u56F4\u7684\u5185\u5BB9\u4F1A\u88AB\u88C1\u6389\u3002"
+    Comment: "ScrollView\u7684Viewport\u906E\u7F69\u53EF\u89C1\u533A\u57DF\u3002\u8D85\u51FA\u8BE5\u533A\u57DF\u7684\u5185\u5BB9\u4F1A\u88AB\u88C1\u526A\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8EScrollView\u3002"
   - UIType: 116
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868\u6C34\u5E73\u6ED1\u52A8\u6761\u80CC\u666F"
+    UITypeDesc: "\u6C34\u5E73\u6EDA\u52A8\u6761\u80CC\u666F"
     TypeMatches:
     - hbarbg
     - hbarbackground
     - hbarpanel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6C34\u5E73\u6EDA\u52A8\u6761\u7684\u80CC\u666F\u8F68\u9053\u3002"
+    Comment: "ScrollView\u6C34\u5E73\u6EDA\u52A8\u6761\u7684\u80CC\u666F\u8F68\u9053\u5B50\u8282\u70B9\uFF0C\u901A\u5E38\u4F4D\u4E8E\u5E95\u90E8\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8EScrollView\u3002"
   - UIType: 117
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868\u6C34\u5E73\u6ED1\u52A8\u6761\u6ED1\u5757"
+    UITypeDesc: "\u6C34\u5E73\u6EDA\u52A8\u6761\u6ED1\u5757"
     TypeMatches:
     - hbar
     - svhbar
     - lsthbar
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u6C34\u5E73\u6EDA\u52A8\u6761\u7684\u62D6\u62FD\u6ED1\u5757\u3002"
+    Comment: "ScrollView\u6C34\u5E73\u6EDA\u52A8\u6761\u53EF\u62D6\u52A8\u6ED1\u5757/\u628A\u624B\u5B50\u8282\u70B9\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8EScrollView\u3002"
   - UIType: 118
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868\u5782\u76F4\u6ED1\u52A8\u6761\u80CC\u666F"
+    UITypeDesc: "\u5782\u76F4\u6EDA\u52A8\u6761\u80CC\u666F"
     TypeMatches:
     - vbarbg
     - vbarbackground
     - vbarpanel
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u5782\u76F4\u6EDA\u52A8\u6761\u7684\u80CC\u666F\u8F68\u9053\u3002"
+    Comment: "ScrollView\u5782\u76F4\u6EDA\u52A8\u6761\u7684\u80CC\u666F\u8F68\u9053\u5B50\u8282\u70B9\uFF0C\u901A\u5E38\u4F4D\u4E8E\u53F3\u4FA7\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8EScrollView\u3002"
   - UIType: 119
-    UITypeDesc: "\u6EDA\u52A8\u5217\u8868\u5782\u76F4\u6ED1\u52A8\u6761\u6ED1\u5757"
+    UITypeDesc: "\u5782\u76F4\u6EDA\u52A8\u6761\u6ED1\u5757"
     TypeMatches:
     - vbar
     - svvbar
     - lstvbar
     UIPrefab: {fileID: 0}
     UIHelper: 
-    Comment: "\u5782\u76F4\u6EDA\u52A8\u6761\u7684\u62D6\u62FD\u6ED1\u5757\u3002"
+    Comment: "ScrollView\u5782\u76F4\u6EDA\u52A8\u6761\u53EF\u62D6\u52A8\u6ED1\u5757/\u628A\u624B\u5B50\u8282\u70B9\uFF0C\u5FC5\u987B\u5F52\u5C5E\u4E8EScrollView\u3002"
   readmeDoc: "\u5FEB\u901F\u4E0A\u624B\uFF1A\n1. \u628A PSD \u653E\u8FDB Unity \u5DE5\u7A0B\u3002\n2.
     \u9009\u4E2D PSD \u6587\u4EF6\uFF0C\u53F3\u952E\u6267\u884C\u201CPsd2UIForm Editor\u201D\uFF0C\u5148\u89E3\u6790\u6210\u8282\u70B9\u6811\u3002\n3.
     \u6253\u5F00\u89E3\u6790\u540E\u7684\u754C\u9762\uFF0C\u68C0\u67E5 UI \u7C7B\u578B\u3001\u52FE\u9009\u9700\u8981\u5BFC\u51FA\u7684\u56FE\u7247\uFF0C\u518D\u70B9\u51FB\u201C\u5BFC\u51FAImages\u201D\u6216\u201C\u751F\u6210UIForm\u201D\u3002\n\n\u547D\u540D\u89C4\u5219\uFF1A\n-
@@ -399,3 +391,6 @@ MonoBehaviour:
   nineSliceBorderTolerance: 5
   sharedAssetsOutput: Assets\Examples\Common
   sharedPrefabOutput: Assets\Examples\CommonPrefab
+  aiProviderConfig:
+    provider: 2
+    showCliWindow: 1

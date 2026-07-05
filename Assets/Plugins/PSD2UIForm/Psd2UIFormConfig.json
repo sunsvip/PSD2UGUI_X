@@ -1,0 +1,479 @@
+{
+    "defaultTextType": 3,
+    "defaultImageType": 1,
+    "forceUseTMP": false,
+    "uiFormTemplateGuid": "6d8c85c377edc7240ace111136f916b1",
+    "rules": [
+        {
+            "UIType": 0,
+            "UITypeDesc": "空值",
+            "TypeMatches": [],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "内部保留类型，不用于PSD图层识别、AI预测或UI生成。"
+        },
+        {
+            "UIType": 1,
+            "UITypeDesc": "图片",
+            "TypeMatches": [
+                "img",
+                "image"
+            ],
+            "UIPrefabGuid": "45ec11f7e92bc6943b46739017fb577e",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.ImageHelper",
+            "Comment": "普通Sprite图片。用于独立图标、装饰图、面板底图、可九宫格拉伸图片；不是复合控件专属子部件时使用。"
+        },
+        {
+            "UIType": 2,
+            "UITypeDesc": "原始贴图",
+            "TypeMatches": [
+                "rimg",
+                "tex",
+                "rawimg",
+                "rawimage"
+            ],
+            "UIPrefabGuid": "7f36da2663cfd5749ad0e39fb84cab11",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.RawImageHelper",
+            "Comment": "RawImage贴图。用于需要Texture直显的照片、视频帧、RenderTexture或特殊纹理；不做Sprite九宫格。"
+        },
+        {
+            "UIType": 3,
+            "UITypeDesc": "文本",
+            "TypeMatches": [
+                "txt",
+                "text",
+                "label"
+            ],
+            "UIPrefabGuid": "a1a4336caef721241a77847ef2fe31c2",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TextHelper",
+            "Comment": "UGUI Text文本。仅用于真实PSD文本图层，用来还原文字内容、字号、颜色和排版；位图艺术字应识别为Image。"
+        },
+        {
+            "UIType": 12,
+            "UITypeDesc": "TMP文本",
+            "TypeMatches": [
+                "tmptxt",
+                "tmptext",
+                "tmplabel"
+            ],
+            "UIPrefabGuid": "560775e0937eb6146b144777c382cd29",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TMPTextHelper",
+            "Comment": "TextMeshPro文本。仅用于真实PSD文本图层，需要TMP字体/富文本/描边等文本效果时使用；位图艺术字仍识别为Image。"
+        },
+        {
+            "UIType": 10,
+            "UITypeDesc": "遮罩",
+            "TypeMatches": [
+                "msk",
+                "mask"
+            ],
+            "UIPrefabGuid": "fa8d704d2340c424b8d1f4fff0abc7cb",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.MaskHelper",
+            "Comment": "Mask遮罩区域。用于头像裁切、窗口裁切、列表可见区域等按Alpha限制子内容显示的图层。"
+        },
+        {
+            "UIType": 11,
+            "UITypeDesc": "纯色矩形",
+            "TypeMatches": [
+                "col",
+                "color",
+                "fillcolor"
+            ],
+            "UIPrefabGuid": "cadb2a7dd614b5d489527d2721186e42",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.FillColorHelper",
+            "Comment": "纯色填充块。用于纯色背景、色条、分割线、面板底色；Unity直接用颜色还原，通常不导出图片。"
+        },
+        {
+            "UIType": 101,
+            "UITypeDesc": "控件背景",
+            "TypeMatches": [
+                "bg",
+                "background"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "复合控件的直接背景/底图子节点。用于Button、Toggle、InputField、Dropdown、Slider、ScrollView等控件内部底图；普通装饰背景请用Image或FillColor。"
+        },
+        {
+            "UIType": 4,
+            "UITypeDesc": "按钮",
+            "TypeMatches": [
+                "bt",
+                "btn",
+                "button"
+            ],
+            "UIPrefabGuid": "7fb39a4b45dce0f4f82b619c80b0d811",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.ButtonHelper",
+            "Comment": "Button主控件节点。可由单图层或组表示；若有背景、文字、按下/禁用等状态图，应作为按钮的直接子节点。"
+        },
+        {
+            "UIType": 13,
+            "UITypeDesc": "TMP按钮",
+            "TypeMatches": [
+                "tmpbt",
+                "tmpbtn",
+                "tmpbutton"
+            ],
+            "UIPrefabGuid": "f91a5a8f057245e428f6532afb0e2c11",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TMPButtonHelper",
+            "Comment": "TMP Button主控件节点。结构与Button相同，但按钮文字使用TMP文本；AI识别时通常仍按Button语义判断。"
+        },
+        {
+            "UIType": 102,
+            "UITypeDesc": "按钮高亮图",
+            "TypeMatches": [
+                "onover",
+                "light",
+                "highlight"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Button鼠标悬停/高亮状态图片。只在按钮提供多状态切图时使用，必须归属于按钮。"
+        },
+        {
+            "UIType": 103,
+            "UITypeDesc": "按钮按下图",
+            "TypeMatches": [
+                "press",
+                "click",
+                "touch"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Button按下状态图片。只在按钮提供多状态切图时使用，必须归属于按钮。"
+        },
+        {
+            "UIType": 104,
+            "UITypeDesc": "按钮选中图",
+            "TypeMatches": [
+                "select",
+                "focus"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Button选中/焦点状态图片。只在按钮提供多状态切图时使用，必须归属于按钮。"
+        },
+        {
+            "UIType": 105,
+            "UITypeDesc": "按钮禁用图",
+            "TypeMatches": [
+                "disable",
+                "forbid"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Button不可点击/禁用状态图片。只在按钮提供多状态切图时使用，必须归属于按钮。"
+        },
+        {
+            "UIType": 106,
+            "UITypeDesc": "按钮文字",
+            "TypeMatches": [
+                "bttxt",
+                "btlb",
+                "bttext",
+                "btlabel",
+                "buttontext",
+                "buttonlabel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Button上的文字子节点。必须是真实PSD文本图层并归属于按钮；位图艺术字按钮标题请用Image。"
+        },
+        {
+            "UIType": 5,
+            "UITypeDesc": "下拉框",
+            "TypeMatches": [
+                "dpd",
+                "dropdown"
+            ],
+            "UIPrefabGuid": "88d84c420a77ea14fb858d5475f873ff",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.DropdownHelper",
+            "Comment": "Dropdown主控件节点。由背景、当前选中项文字、右侧箭头以及可选下拉列表结构组成。"
+        },
+        {
+            "UIType": 14,
+            "UITypeDesc": "TMP下拉框",
+            "TypeMatches": [
+                "tmpdpd",
+                "tmpdropdown"
+            ],
+            "UIPrefabGuid": "e2ec1e4429406d54db75bcda08e8b68d",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TMPDropdownHelper",
+            "Comment": "TMP Dropdown主控件节点。结构与Dropdown相同，但显示文字使用TMP文本；AI识别时通常仍按Dropdown语义判断。"
+        },
+        {
+            "UIType": 107,
+            "UITypeDesc": "下拉框显示文字",
+            "TypeMatches": [
+                "dpdlb",
+                "dpdlabel",
+                "dpdtxt",
+                "dpdtext",
+                "dropdowntext",
+                "dropdownlabel",
+                "dropdowntxt",
+                "dropdownlb"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Dropdown当前选中项的显示文字子节点。必须是真实PSD文本图层并归属于Dropdown。"
+        },
+        {
+            "UIType": 108,
+            "UITypeDesc": "下拉框箭头",
+            "TypeMatches": [
+                "dpdicon",
+                "dpdarrow",
+                "arrow",
+                "dropdownarrow"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Dropdown右侧展开箭头/三角图标子节点。必须归属于Dropdown；普通方向图标请用Image。"
+        },
+        {
+            "UIType": 6,
+            "UITypeDesc": "输入框",
+            "TypeMatches": [
+                "ipt",
+                "input",
+                "inputbox",
+                "inputfield"
+            ],
+            "UIPrefabGuid": "00448c5c38cef294d849b4cf6d0c6965",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.InputFieldHelper",
+            "Comment": "InputField主控件节点。由背景、占位提示文字、输入内容文字组成，用于用户可输入文本的区域。"
+        },
+        {
+            "UIType": 15,
+            "UITypeDesc": "TMP输入框",
+            "TypeMatches": [
+                "tmpipt",
+                "tmpinput",
+                "tmpinputbox",
+                "tmpinputfield"
+            ],
+            "UIPrefabGuid": "e337f73260577d14b93f65c94c11dcea",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TMPInputFieldHelper",
+            "Comment": "TMP InputField主控件节点。结构与InputField相同，但文本使用TMP；AI识别时通常仍按InputField语义判断。"
+        },
+        {
+            "UIType": 109,
+            "UITypeDesc": "输入框占位文本",
+            "TypeMatches": [
+                "placeholder",
+                "ipttips",
+                "tips",
+                "inputtips"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "InputField未输入时显示的placeholder提示文字，如“请输入用户名”。必须是真实PSD文本图层并归属于InputField。"
+        },
+        {
+            "UIType": 110,
+            "UITypeDesc": "输入框内容文本",
+            "TypeMatches": [
+                "ipttxt",
+                "ipttext",
+                "iptlb",
+                "iptlabel",
+                "inputtext",
+                "inputlabel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "InputField用户输入后的正文文字样式节点。必须是真实PSD文本图层并归属于InputField。"
+        },
+        {
+            "UIType": 7,
+            "UITypeDesc": "勾选/单选框",
+            "TypeMatches": [
+                "tg",
+                "toggle",
+                "checkbox"
+            ],
+            "UIPrefabGuid": "66329988bd135fd49bf0d5927b882f6c",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.ToggleHelper",
+            "Comment": "Toggle主控件节点。用于开关、复选框、单选项；通常由背景、选中标记和说明文字组成。"
+        },
+        {
+            "UIType": 16,
+            "UITypeDesc": "TMP勾选框",
+            "TypeMatches": [
+                "tmptg",
+                "tmptoggle",
+                "tmpcheckbox"
+            ],
+            "UIPrefabGuid": "e221135e4d6e6e5479f64351d4de16bb",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.TMPToggleHelper",
+            "Comment": "TMP Toggle主控件节点。结构与Toggle相同，但说明文字使用TMP；AI识别时通常仍按Toggle语义判断。"
+        },
+        {
+            "UIType": 17,
+            "UITypeDesc": "普通容器",
+            "TypeMatches": [
+                "panel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.PanelHelper",
+            "Comment": "Panel普通容器节点。用于组织一组UI元素或面板；若存在直接子 .bg，则生成带 Image 的根节点并绑定 .bg；否则生成仅含 RectTransform 的空容器。"
+        },
+        {
+            "UIType": 18,
+            "UITypeDesc": "单选组容器",
+            "TypeMatches": [
+                "tgg",
+                "togglegroup",
+                "radiogroup"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.ToggleGroupHelper",
+            "Comment": "ToggleGroup单选组容器。仅可标记在LayerGroup图层上；若存在直接子 .bg，则生成带 Image 的根节点并绑定 .bg，同时在根节点附加 ToggleGroup 组件。"
+        },
+        {
+            "UIType": 111,
+            "UITypeDesc": "勾选标记",
+            "TypeMatches": [
+                "mark",
+                "tgmark",
+                "togglemark"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Toggle选中后显示的勾、圆点或开关滑块图层。必须归属于Toggle；未选中底图用Background或Image。"
+        },
+        {
+            "UIType": 112,
+            "UITypeDesc": "勾选框文字",
+            "TypeMatches": [
+                "tglb",
+                "tgtxt",
+                "toggletext",
+                "togglelabel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Toggle右侧/旁边的说明文字子节点。必须是真实PSD文本图层并归属于Toggle。"
+        },
+        {
+            "UIType": 8,
+            "UITypeDesc": "滑动条/进度条",
+            "TypeMatches": [
+                "sld",
+                "slider"
+            ],
+            "UIPrefabGuid": "fe19cbe4c01b78945a8888d2bdd61306",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.SliderHelper",
+            "Comment": "Slider主控件节点。用于进度条或可拖动滑条，通常由背景轨道、填充区域和可选拖动手柄组成。"
+        },
+        {
+            "UIType": 113,
+            "UITypeDesc": "滑动条填充",
+            "TypeMatches": [
+                "fill",
+                "sldfill",
+                "sliderfill"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Slider当前进度/数值对应的填充区域子节点，通常是横向或纵向条形图片，必须归属于Slider。"
+        },
+        {
+            "UIType": 114,
+            "UITypeDesc": "滑动条手柄",
+            "TypeMatches": [
+                "handle",
+                "sldhandle",
+                "sliderhandle"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "Slider可拖动手柄/滑块子节点。仅在可交互滑条需要拖拽点时使用，必须归属于Slider。"
+        },
+        {
+            "UIType": 9,
+            "UITypeDesc": "滚动视图/列表",
+            "TypeMatches": [
+                "sv",
+                "scrollview",
+                "lst",
+                "listview"
+            ],
+            "UIPrefabGuid": "d99ca54e56291f84597596e620be1b4b",
+            "UIHelper": "UGF.EditorTools.Psd2UGUI.ScrollViewHelper",
+            "Comment": "ScrollView主控件节点。用于可滚动列表或区域，由背景、Viewport可见区域、Content内容区和可选滚动条组成。"
+        },
+        {
+            "UIType": 115,
+            "UITypeDesc": "滚动视图视口",
+            "TypeMatches": [
+                "vpt",
+                "viewport",
+                "svmask",
+                "lstmask",
+                "listviewport",
+                "scrollviewport"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "ScrollView的Viewport遮罩可见区域。超出该区域的内容会被裁剪，必须归属于ScrollView。"
+        },
+        {
+            "UIType": 116,
+            "UITypeDesc": "水平滚动条背景",
+            "TypeMatches": [
+                "hbarbg",
+                "hbarbackground",
+                "hbarpanel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "ScrollView水平滚动条的背景轨道子节点，通常位于底部，必须归属于ScrollView。"
+        },
+        {
+            "UIType": 117,
+            "UITypeDesc": "水平滚动条滑块",
+            "TypeMatches": [
+                "hbar",
+                "svhbar",
+                "lsthbar"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "ScrollView水平滚动条可拖动滑块/把手子节点，必须归属于ScrollView。"
+        },
+        {
+            "UIType": 118,
+            "UITypeDesc": "垂直滚动条背景",
+            "TypeMatches": [
+                "vbarbg",
+                "vbarbackground",
+                "vbarpanel"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "ScrollView垂直滚动条的背景轨道子节点，通常位于右侧，必须归属于ScrollView。"
+        },
+        {
+            "UIType": 119,
+            "UITypeDesc": "垂直滚动条滑块",
+            "TypeMatches": [
+                "vbar",
+                "svvbar",
+                "lstvbar"
+            ],
+            "UIPrefabGuid": "",
+            "UIHelper": "",
+            "Comment": "ScrollView垂直滚动条可拖动滑块/把手子节点，必须归属于ScrollView。"
+        }
+    ],
+    "readmeDoc": "快速上手：\n1. 把 PSD 放进 Unity 工程。\n2. 选中 PSD 文件，右键执行“Psd2UIForm Editor”，先解析成节点树。\n3. 打开解析后的界面，检查 UI 类型、勾选需要导出的图片，再点击“导出Images”或“生成UIForm”。\n\n命名规则：\n- 在图层或组名末尾加“.类型标签”即可指定 UI 类型，例如：Play.btn、Title.text、Avatar.img。\n- 组合控件请用组作为父节点，在组名上标主类型，在子图层上标子类型。例如：Login.btn 组内可放 Background、Button_Text。\n- 如果不写类型标签，插件会自动判断：文本图层按文本，纯色填充层按纯色，普通图片按默认图片类型。\n\n设计建议：\n- 文案尽量使用真正的 PSD 文本图层，这样才能还原文字内容、字号、颜色和大部分文字效果。\n- 艺术字、位图字、做死的特效字请当作 Image，不要标成 Text。\n- 可拉伸背景建议保留完整边框，导出时会按九宫格规则自动识别。\n- 纯色矩形优先标成 FillColor，Unity 会直接用颜色还原，通常不必单独导出图片。\n\n复用功能：\n- 图层名以“ref 路径名”开头时，会复用共享图片资源，不再重复导出。\n- 组名以“refp 路径名”开头时，会复用共享 Prefab。\n- 复用资源保存位置由“复用图片导出路径”和“复用prefab导出路径”决定。\n\n其他说明：\n- 开启“强制优先使用TMP”后，Text、Button、Dropdown、InputField、Toggle 会优先生成 TMP 版本。\n- 开启“中文转拼音”后，导出的对象名和资源名会自动转成更安全的英文/拼音格式。",
+    "convertZh2En": true,
+    "nineSliceBorderTolerance": 5,
+    "sharedAssetsOutput": "Assets\\Examples\\Common",
+    "sharedPrefabOutput": "Assets\\Examples\\CommonPrefab",
+    "aiProviderConfig": {
+        "provider": 2
+    }
+}
