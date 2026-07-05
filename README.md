@@ -3,7 +3,7 @@ Convert psd file to ugui prefab,  text, image, raw image, button, slider, scroll
 
 psd一键拼UI插件。与其它插件不同，此插件进行了大量优化，降低美术、技术使用门槛。插件在unity中直接把psd文件解析成可编辑的节点树prefab，ui程序可以任意调整或组织层级，点击生成即可得到拼好的uGUI预制体。
 
-若感兴趣可以购买源码Pro版本：[获取超强大的Pro版本插件](https://item.taobao.com/item.htm?id=755447921869)
+源码Pro版本：[超强大的Pro版本功能介绍](https://efunstudio.cn/psd2uiform/)
 
 功能视频教程：[https://www.bilibili.com/video/BV1SVUkBWE2v/](https://www.bilibili.com/video/BV1SVUkBWE2v/)
 
